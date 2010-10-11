@@ -1,0 +1,5 @@
+require("vain.layout.termfair")
+require("vain.layout.browse")
+require("vain.layout.uselessfair")
+require("vain.layout.gimp")
+module("vain.layout")
