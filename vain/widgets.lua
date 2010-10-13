@@ -299,7 +299,7 @@ net_last_t = {}
 net_last_r = {}
 
 function net(iface)
-    local delta = 1
+    local delta = 2
     local mynet = widget({ type = "textbox" })
     local mynetupdate = function()
         local state = vain.util.first_line('/sys/class/net/' .. iface ..
