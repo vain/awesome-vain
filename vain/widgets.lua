@@ -96,6 +96,12 @@ function mailcheck(mailpath, ignore_boxes)
     local mymailchecktimer = timer({ timeout = 30 })
     mymailchecktimer:add_signal("timeout", mymailcheckupdate)
     mymailchecktimer:start()
+    mymailcheck:buttons(awful.util.table.join(
+        awful.button({}, 0,
+            function()
+                awful.util.spawn(terminal .. ' -e muttgit.sh')
+            end)
+    ))
     return mymailcheck
 end
 

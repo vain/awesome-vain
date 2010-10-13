@@ -344,6 +344,10 @@ are essentially optional (use `nil`). This will use the default path
 
 	mymailcheck = vain.widgets.mailcheck(nil, { "lists" })
 
+When clicking on the widget, `muttgit.sh` is called. That's a wrapper
+script for [mutt](http://www.mutt.org/) which I use: It automatically
+commits to a [git](http://git-scm.com/) repository after I've read mail.
+
 ## battery
 Show the remaining time and capacity of your laptop battery, as well as
 the current wattage. Uses the `/sys` filesystem.
