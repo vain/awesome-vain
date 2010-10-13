@@ -13,6 +13,8 @@ local vain = vain
 
 module("vain.widgets")
 
+terminal = ''
+
 -- System load
 function systemload()
     local mysysload = widget({ type = "textbox" })
@@ -155,7 +157,7 @@ function battery()
 end
 
 -- Volume
-function volume(mixer_channel, terminal)
+function volume(mixer_channel)
     local myvolume = widget({ type = "textbox" })
     local myvolumeupdate = function()
         -- Mostly copied from vicious.
@@ -222,7 +224,7 @@ function volume(mixer_channel, terminal)
 end
 
 -- MPD
-function mpd(mixer_channel, terminal)
+function mpd(mixer_channel)
     local mpdtable = {
         widget({ type = "textbox" }),
         widget({ type = "imagebox" }),

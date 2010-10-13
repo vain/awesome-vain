@@ -18,6 +18,9 @@ Using it
 Basically, all you have to do is including the module:
 
 	require("vain")
+	vain.widgets.terminal = "xterm"
+
+Some widgets require a terminal, so you need to set that as well.
 
 For this to work, the directory `vain` must be located in the same
 directory as your `rc.lua`.
@@ -359,7 +362,7 @@ Show and control the current volume in a textbox. Periodically calls
 It takes an argument `mixer_channel` which is something like `Master` or
 `PCM`.
 
-	myvolume = vain.widgets.volume('PCM', terminal)
+	myvolume = vain.widgets.volume('PCM')
 
 ## mpd
 Provides a set of imageboxes to control a running instance of mpd on
@@ -372,7 +375,7 @@ To control mpd, `mpc` is used.
 This function does not return one widget but a table of widgets. For
 now, you'll have to add them one for one to your wibox:
 
-	mpdtable = vain.widgets.mpd(mixer_channel, terminal)
+	mpdtable = vain.widgets.mpd(mixer_channel)
 	...
 	mywibox[s].widgets = {
 	    ...
