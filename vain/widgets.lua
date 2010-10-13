@@ -32,6 +32,12 @@ function systemload()
     local mysysloadtimer = timer({ timeout = 10 })
     mysysloadtimer:add_signal("timeout", mysysloadupdate)
     mysysloadtimer:start()
+    mysysload:buttons(awful.util.table.join(
+        awful.button({}, 0,
+            function()
+                awful.util.spawn(terminal .. ' -e htop')
+            end)
+    ))
     return mysysload
 end
 

@@ -309,6 +309,8 @@ Show the current system load in a textbox. Read it directly from
 
 	mysysload = vain.widgets.systemload()
 
+A click on the widget will call `htop` in your `terminal`.
+
 ## mailcheck
 Check Maildirs and show the result in a textbox. For example, I have a
 set of Maildirs below `~/Mail`:
