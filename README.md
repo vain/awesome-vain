@@ -381,6 +381,7 @@ now, you'll have to add them one for one to your wibox:
 	    mpdtable[3],
 	    mpdtable[4],
 	    mpdtable[5],
+	    mpdtable[6],
 	    ...
 	}
 

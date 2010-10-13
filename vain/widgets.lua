@@ -228,7 +228,8 @@ function mpd(mixer_channel, terminal)
         widget({ type = "imagebox" }),
         widget({ type = "imagebox" }),
         widget({ type = "imagebox" }),
-        widget({ type = "imagebox" })
+        widget({ type = "imagebox" }),
+        widget({ type = "textbox" })
     }
 
     mpdtable[1].text = " mpd: "
@@ -241,6 +242,8 @@ function mpd(mixer_channel, terminal)
                               "player_play.png")
     mpdtable[5].image = image("/usr/share/icons/Tango/32x32/actions/" ..
                               "player_fwd.png")
+
+    mpdtable[6].text = " "
 
     local function buttons_for_mpdwidget(widg, cmd)
         widg:buttons(awful.util.table.join(
