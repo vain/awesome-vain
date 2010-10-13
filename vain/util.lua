@@ -113,7 +113,9 @@ function paddivnum(num, padlen, declen)
     local fill = string.rep('0', padlen - #intpart)
     local numstr = string.reverse(fill .. rounded)
     numstr = string.gsub(numstr, '(%d%d%d)', '%1,')
-    return string.reverse(numstr)
+    numstr = string.reverse(numstr)
+    numstr = string.gsub(numstr, '^,', '')
+    return numstr
 end
 
 -- vim: set et :
