@@ -9,6 +9,7 @@ local capi =
     client = client,
     keygrabber = keygrabber
 }
+local io = io
 
 module("vain.util")
 
@@ -80,6 +81,19 @@ function element_in_table(element, table)
         end
     end
     return false
+end
+
+-- Read the first line of a file or return nil.
+function first_line(f)
+    local fp = io.open(f)
+    if not fp
+    then
+        return nil
+    end
+
+    local content = fp:read("*l")
+    fp:close()
+    return content
 end
 
 -- vim: set et :

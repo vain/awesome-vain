@@ -102,18 +102,7 @@ function battery()
     local mybattery = widget({ type = "textbox" })
     local mybatteryupdate = function()
 
-        local function first_line(f)
-            local fp = io.open(f)
-            if fp == nil
-            then
-                return nil
-            end
-
-            local content = fp:read("*l")
-            fp:close()
-            return content
-        end
-
+        local first_line = vain.util.first_line
         local present = first_line("/sys/class/power_supply/BAT0/" ..
                                    "present")
         if present == "1"
