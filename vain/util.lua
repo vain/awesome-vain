@@ -2,6 +2,7 @@
 local awful = awful
 local mouse = mouse
 local pairs = pairs
+local string = string
 local capi =
 {
     screen = screen,
@@ -94,6 +95,25 @@ function first_line(f)
     local content = fp:read("*l")
     fp:close()
     return content
+end
+
+-- Pad a number (float) with leading zeros and add thousand separators.
+-- For example,
+--
+--     print(vain.util.paddivnum(1234567.123, 8, 2))
+--
+-- shows
+--
+--     01,234,567.12
+--
+-- That's handy if you need strings of fixed lengths.
+function paddivnum(num, padlen, declen)
+    local rounded = string.format('%.' .. declen .. 'f', num)
+    local intpart = string.format('%d', num)
+    local fill = string.rep('0', padlen - #intpart)
+    local numstr = string.reverse(fill .. rounded)
+    numstr = string.gsub(numstr, '(%d%d%d)', '%1,')
+    return string.reverse(numstr)
 end
 
 -- vim: set et :
