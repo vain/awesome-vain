@@ -163,7 +163,7 @@ function volume(mixer_channel, terminal)
         local mixer = f:read("*all")
         f:close()
 
-        local volu, mute = string.match(mixer, "([%d]+%%).*%[([%l]*)")
+        local volu, mute = string.match(mixer, "([%d]+)%%.*%[([%l]*)")
 
         if volu == nil
         then
@@ -173,9 +173,14 @@ function volume(mixer_channel, terminal)
         if mute == nil
         then
             mute = "---"
+        elseif mute == 'on'
+        then
+            mute = 'O'
+        else
+            mute = 'M'
         end
 
-        local ret = string.format("%s %s", volu, mute)
+        local ret = string.format("%03d%% %s", volu, mute)
         myvolume.text = ' <span color="' .. beautiful.fg_urgent .. '">'
             .. ret .. '</span> '
     end
