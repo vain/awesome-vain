@@ -384,6 +384,12 @@ now, you'll have to add them one for one to your wibox:
 	    ...
 	}
 
+## net
+Monitors network interfaces and shows current traffic in a textbox. If
+the interface is not present or if there's not enough data yet, you'll
+see `wlan0: -` or similar.  Otherwise, the current traffic is shown in
+kilobytes per second as `eth0: ↑(00,010.2), ↓(01,037.8)` or similar.
+
 
 Utility functions
 =================

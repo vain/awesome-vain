@@ -272,4 +272,59 @@ function mpd(mixer_channel, terminal)
     return mpdtable
 end
 
+-- Net
+net_last_t = {}
+net_last_r = {}
+
+function net(iface)
+    local delta = 1
+    local mynet = widget({ type = "textbox" })
+    local mynetupdate = function()
+        local now_t = vain.util.first_line('/sys/class/net/' .. iface ..
+                                           '/statistics/tx_bytes')
+        local now_r = vain.util.first_line('/sys/class/net/' .. iface ..
+                                           '/statistics/rx_bytes')
+        local text = iface .. ': '
+
+        if not now_t or not now_r
+        then
+            mynet.text = ' ' .. text .. '-' .. ' '
+            return
+        end
+
+        if net_last_t[iface] and net_last_t[iface]
+        then
+            local val = ((now_t - net_last_t[iface]) / delta / 1e3)
+            text = text
+                   .. '<span color="' .. beautiful.fg_focus .. '">'
+                   .. '↑('
+                   .. vain.util.paddivnum(val, 5, 1)
+                   .. ')'
+                   .. '</span>'
+
+            text = text .. ', '
+
+            val = ((now_r - net_last_r[iface]) / delta / 1e3)
+            text = text
+                   .. '<span color="' .. beautiful.fg_urgent .. '">'
+                   .. '↓('
+                   .. vain.util.paddivnum(val, 5, 1)
+                   .. ')'
+                   .. '</span>'
+
+            mynet.text = ' ' .. text .. ' '
+        else
+            mynet.text = ' ' .. text .. '-' .. ' '
+        end
+
+        net_last_t[iface] = now_t
+        net_last_r[iface] = now_r
+    end
+    mynetupdate()
+    local mynettimer = timer({ timeout = delta })
+    mynettimer:add_signal("timeout", mynetupdate)
+    mynettimer:start()
+    return mynet
+end
+
 -- vim: set et :
