@@ -302,13 +302,15 @@ function net(iface)
     local delta = 1
     local mynet = widget({ type = "textbox" })
     local mynetupdate = function()
+        local state = vain.util.first_line('/sys/class/net/' .. iface ..
+                                           '/operstate')
         local now_t = vain.util.first_line('/sys/class/net/' .. iface ..
                                            '/statistics/tx_bytes')
         local now_r = vain.util.first_line('/sys/class/net/' .. iface ..
                                            '/statistics/rx_bytes')
         local text = iface .. ': '
 
-        if not now_t or not now_r
+        if state == 'down' or not now_t or not now_r
         then
             mynet.text = ' ' .. text .. '-' .. ' '
             return
