@@ -97,7 +97,7 @@ function mailcheck(mailpath, ignore_boxes)
     return mymailcheck
 end
 
--- Batterie
+-- Battery
 function battery()
     local mybattery = widget({ type = "textbox" })
     local mybatteryupdate = function()
