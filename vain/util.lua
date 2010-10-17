@@ -106,16 +106,17 @@ end
 --
 --     01,234,567.12
 --
--- That's handy if you need strings of fixed lengths.
+-- That's handy if you need strings of fixed lengths. However, this only
+-- works for positive numbers.
 function paddivnum(num, padlen, declen)
     local rounded = string.format('%.' .. declen .. 'f', num)
-    local intpart = string.format('%d', num)
-    local fill = string.rep('0', padlen - #intpart)
-    local numstr = string.reverse(fill .. rounded)
-    numstr = string.gsub(numstr, '(%d%d%d)', '%1,')
-    numstr = string.reverse(numstr)
-    numstr = string.gsub(numstr, '^,', '')
-    return numstr
+    local intpart, decpart = string.match(rounded, '([^.]+)\.(.*)')
+    intpart = string.rep('0', padlen - #intpart) .. intpart
+    intpart = string.reverse(intpart)
+    intpart = string.gsub(intpart, '(%d%d%d)', '%1,')
+    intpart = string.reverse(intpart)
+    intpart = string.gsub(intpart, '^,', '')
+    return intpart .. '.' .. decpart
 end
 
 -- vim: set et :
