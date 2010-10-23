@@ -1,7 +1,10 @@
 -- Grab environment.
 local awful = awful
+local naughty = naughty
 local mouse = mouse
 local pairs = pairs
+local ipairs = ipairs
+local table = table
 local string = string
 local capi =
 {
@@ -70,6 +73,29 @@ function menu_clients_current_tags(menu, args)
     local m = awful.menu.new(menu)
     m:show(args)
     return m
+end
+
+-- Destroys all current/visible naughty notifications.
+function clear_naughty()
+    -- First, store current items. Necessary because naughty.destroy()
+    -- interferes with the iteration.
+    local notis = {}
+    for _, scr in ipairs(naughty.notifications)
+    do
+        for _, ori in pairs(scr)
+        do
+            for _, noti in pairs(ori)
+            do
+                table.insert(notis, noti)
+            end
+        end
+    end
+
+    -- Got 'em, destroy 'em.
+    for _, noti in pairs(notis)
+    do
+        naughty.destroy(noti)
+    end
 end
 
 -- Checks whether this element exists in the table.
