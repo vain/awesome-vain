@@ -64,18 +64,20 @@ function mailcheck(mailpath, ignore_boxes)
             if line ~= nil
             then
                 -- Strip off leading mailpath and anything after and
-                -- including "/new...". Save only unique boxes.
+                -- including "/new...". Save number of new mails.
                 local box = string.match(line, mailpath ..
                                                "/*\.?([^/]+)/new.*")
                 if boxes[box] == nil
                 then
                     boxes[box] = 1
+                else
+                    boxes[box] = boxes[box] + 1
                 end
             end
         until line == nil
 
         local newmail = ""
-        for box, dummy in pairs(boxes)
+        for box, number in pairs(boxes)
         do
             -- Add this box only if it's not to be ignored.
             if ignore_boxes ~= nil
@@ -83,9 +85,10 @@ function mailcheck(mailpath, ignore_boxes)
             then
                 if newmail == ""
                 then
-                    newmail = box
+                    newmail = box .. "(" .. number .. ")"
                 else
-                    newmail = newmail .. ", " .. box
+                    newmail = newmail .. ", " ..
+                              box .. "(" .. number .. ")"
                 end
             end
         end

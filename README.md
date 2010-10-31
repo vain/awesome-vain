@@ -337,8 +337,8 @@ set of Maildirs below `~/Mail`:
 
 The `mailcheck` widget checks whether there are files in the `new`
 directories. To do so, it calls `find`. If there's new mail, the textbox
-will say something like "mail: bugs, system", otherwise it says "no
-mail".
+will say something like "mail: bugs(3), system(1)", otherwise it says
+"no mail".
 
 `mailcheck` takes a path and a table of mailboxes to be ignored. Both
 are essentially optional (use `nil`). This will use the default path
