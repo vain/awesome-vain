@@ -51,9 +51,9 @@ Layouts
 How do layouts work in general?
 -------------------------------
 
-A "layout" simply a lua table or module that has an attribute `name` and
-a function called `arrange`. So the most simple layout could look like
-this:
+A "layout" is simply a lua table or module that has an attribute `name`
+and a function called `arrange`. So the most simple layout could look
+like this:
 
 	mylayout = {}
 	mylayout.name = "hurz"
