@@ -420,3 +420,18 @@ of currently visible tags. Use it like this:
 	    end),
 	    ...
 	)
+
+## magnify\_client
+Set a client to floating and resize it in the same way the "magnifier"
+layout does it. Place it on the "current" screen (derived from the mouse
+position). This allows you to magnify any client you wish, regardless of
+the currently used layout. Use it with a client keybinding like this:
+
+	clientkeys = awful.util.table.join(
+		...
+		awful.key({ modkey, "Control" }, "m", vain.util.magnify_client),
+		...
+	)
+
+If you want to "de-magnify" it, just reset the clients floating state to
+`false` (hit `Mod`+`CTRL`+`Space`, for example).

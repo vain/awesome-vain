@@ -16,6 +16,7 @@ local capi =
 local io = io
 local screen = screen
 local mouse = mouse
+local math = math
 
 module("vain.util")
 
@@ -154,6 +155,21 @@ function move_mouse_away()
     g.x = mg.x + 1
     g.y = mg.y + mg.height - 1
     mouse.coords(g)
+end
+
+-- Magnify a client: Set it to "float" and resize it.
+function magnify_client(c)
+    awful.client.floating.set(c, true)
+
+    local mg = screen[mouse.screen].geometry
+    local tag = awful.tag.selected(mouse.screen)
+    local mwfact = awful.tag.getmwfact(tag)
+    local g = {}
+    g.width = math.sqrt(mwfact) * mg.width
+    g.height = math.sqrt(mwfact) * mg.height
+    g.x = mg.x + (mg.width - g.width) / 2
+    g.y = mg.y + (mg.height - g.height) / 2
+    c:geometry(g)
 end
 
 -- vim: set et :
