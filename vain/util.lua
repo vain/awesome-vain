@@ -14,6 +14,8 @@ local capi =
     keygrabber = keygrabber
 }
 local io = io
+local screen = screen
+local mouse = mouse
 
 module("vain.util")
 
@@ -143,6 +145,15 @@ function paddivnum(num, padlen, declen)
     intpart = string.reverse(intpart)
     intpart = string.gsub(intpart, '^,', '')
     return intpart .. '.' .. decpart
+end
+
+-- Move the mouse away: To the bottom left minues a little offset.
+function move_mouse_away()
+    local g = {}
+    local mg = screen[mouse.screen].geometry
+    g.x = mg.x + 1
+    g.y = mg.y + mg.height - 1
+    mouse.coords(g)
 end
 
 -- vim: set et :
