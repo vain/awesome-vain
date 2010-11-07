@@ -97,8 +97,9 @@ function mailcheck(mailpath, ignore_boxes)
         then
             mymailcheck.text = " no mail "
         else
-            mymailcheck.text = ' <span color="#FF0000">mail: '
-                               .. newmail .. '</span> '
+            mymailcheck.text = ' <span color="'
+                               .. beautiful.border_focus
+                               .. '">mail: ' .. newmail .. '</span> '
         end
     end
     mymailcheckupdate()
