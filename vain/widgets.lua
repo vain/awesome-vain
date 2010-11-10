@@ -80,8 +80,8 @@ function mailcheck(mailpath, ignore_boxes)
         for box, number in pairs(boxes)
         do
             -- Add this box only if it's not to be ignored.
-            if ignore_boxes ~= nil
-               and not vain.util.element_in_table(box, ignore_boxes)
+            if ignore_boxes == nil
+               or not vain.util.element_in_table(box, ignore_boxes)
             then
                 if newmail == ""
                 then
