@@ -56,7 +56,7 @@ function mailcheck(mailpath, ignore_boxes)
         -- Search for files in "new" directories. Print only their base
         -- path.
         local p = io.popen("find " .. mailpath ..
-                           " -path '*/new/*' -type f -printf '%h\n'")
+                           " -path '*/new/[^.]*' -type f -printf '%h\n'")
         local boxes = {}
         local line = ""
         repeat
