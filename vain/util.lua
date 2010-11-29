@@ -46,6 +46,7 @@ function menu_clients_current_tags(menu, args)
         do
             cls_t[#cls_t + 1] = { awful.util.escape(c.name) or "",
                                   function ()
+                                      c.minimized = false
                                       if not c:isvisible()
                                       then
                                           awful.tags.viewmore(c:tags(),
