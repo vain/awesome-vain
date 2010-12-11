@@ -355,4 +355,37 @@ function net(iface)
     return mynet
 end
 
+-- Integration of "gitodo".
+-- See: https://github.com/vain/gitodo
+-- Shows the number of open tasks. On click, a terminal is spawned which
+-- first shows all those tasks and then launches a shell for you to work
+-- with gitodo.
+function gitodo()
+    local widg = widget({ type = "textbox" })
+
+    local mytodoupdate = function()
+        local f = io.popen("gitodo | wc -l")
+        local opentasks = f:read("*all")
+        f:close()
+
+        widg.text = ' todo: <span color="' .. beautiful.fg_urgent
+                    .. '">' .. vain.util.trim(opentasks) .. '</span>'
+                    .. ' '
+    end
+    mytodoupdate()
+    local todotimer = timer({ timeout = 120 })
+    todotimer:add_signal("timeout", mytodoupdate)
+    todotimer:start()
+
+    widg:buttons(awful.util.table.join(
+        awful.button({}, 0,
+            function()
+                awful.util.spawn(terminal
+                                 .. ' -e bash -c "gitodo; echo; bash"')
+            end)
+    ))
+
+    return widg
+end
+
 -- vim: set et :
