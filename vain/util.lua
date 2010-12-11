@@ -168,4 +168,10 @@ function magnify_client(c)
     c:geometry(g)
 end
 
+-- Trim a string.
+-- See also: http://lua-users.org/wiki/StringTrim
+function trim(s)
+    return s:match "^%s*(.-)%s*$"
+end
+
 -- vim: set et :
