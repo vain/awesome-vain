@@ -9,6 +9,7 @@ local io = io
 local math = math
 local os = os
 local pairs = pairs
+local tonumber = tonumber
 local vain = vain
 
 module("vain.widgets")
@@ -364,13 +365,37 @@ function gitodo()
     local widg = widget({ type = "textbox" })
 
     local mytodoupdate = function()
-        local f = io.popen("gitodo | wc -l")
-        local opentasks = f:read("*all")
+        local f = io.popen("gitodo --count")
+        local ret = f:read("*all")
         f:close()
 
-        widg.text = ' todo: <span color="' .. beautiful.fg_urgent
-                    .. '">' .. vain.util.trim(opentasks) .. '</span>'
-                    .. ' '
+        local outdated, warning, all = string.match(ret,
+                                                    "(%d+) (%d+) (%d+)")
+
+        local msg = ' todo: '
+
+        if tonumber(outdated) > 0
+        then
+            msg = msg .. '<span color="' .. beautiful.border_focus
+                      .. '">'
+                      .. outdated
+                      .. '</span>, '
+        end
+
+        if tonumber(warning) > 0
+        then
+            msg = msg .. '<span color="' .. beautiful.fg_urgent
+                      .. '">'
+                      .. warning
+                      .. '</span>, '
+        end
+
+        msg = msg .. '<span color="' .. beautiful.fg_urgent
+                  .. '">'
+                  .. all
+                  .. '</span> '
+
+        widg.text = msg
     end
     mytodoupdate()
     local todotimer = timer({ timeout = 120 })
