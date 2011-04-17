@@ -220,15 +220,33 @@ Gimp windows are set to floating mode.
 	|       |   |   |
 	+-------+---+---+
 
-By default, when opening another image window, it will be placed over
-the first window overlapping it. So usually, you only see one image
-window because that's the image you're working on. You can use an
-application switcher or hotkeys to switch to other image windows (see
-`menu_clients_current_tags` in the section "Utility functions").
+By default (i.e., if `ncol` is 1), when opening another image window, it
+will be placed over the first window overlapping it. So usually, you
+only see one image window because that's the image you're working on.
+You can use an application switcher or hotkeys to switch to other image
+windows (see `menu_clients_current_tags` in the section "Utility
+functions").
 
-Sometimes, you want to see the other images as well. Increasing the
-value of `ncol` of the tag to a value greater than 1, you can switch
-to "stacking mode". Now, all images will be stacked in the main slot:
+Sometimes, you may need to get a better overview. By setting the value
+of `ncol` to 2, you can switch to "cascade mode":
+
+	+-------------+---+---+
+	|     +-----+ |   |   |
+	|     |     | |   |   |
+	|   +-| Img | |   |   |
+	|   | |     | |   |   |
+	| +-| +-----+ | T | D |
+	| | |     |   |   |   |
+	| | +-----+   |   |   |
+	| |     |     |   |   |
+	| +-----+     |   |   |
+	+-------------+---+---|
+
+You can control the offset for each window by setting the global
+variable `vain.layout.gimp.cascade_offset`. The default value is 16
+pixels.
+
+When setting `ncol` to 2, all images will be stacked in the main slot:
 
 	+-------+---+---+
 	| Image |   |   |
@@ -244,7 +262,7 @@ mode" and the main slot will have a width of 75% of your screen:
 
 	awful.layout.set(vain.layout.gimp, tags[1][7])
 	awful.tag.setmwfact(0.75, tags[1][2])
-	awful.tag.setncol(2, tags[1][7])
+	awful.tag.setncol(3, tags[1][7])
 
 However, this is not enough. Default Awesome rules will set the
 toolboxes and docks to floating mode because they are *utility windows*.
