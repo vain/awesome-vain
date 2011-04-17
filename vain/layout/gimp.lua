@@ -93,14 +93,16 @@ function arrange(p)
             end
         end
 
-        -- Common values.
+        -- Common values for main and slaves.
         mainwid = wa.width * mwfact
-        slavearea = wa.width - mainwid
 
         -- Layout main windows. New windows on top.
         if #main > 0
         then
+
+            -- Frequently used values.
             mainhei = wa.height / #main
+            current_cascade_offset = cascade_offset * (#main - 1)
 
             for i = #main,1,-1
             do
@@ -119,8 +121,8 @@ function arrange(p)
                     -- Overlap windows, cascaded.
                     g.x = wa.x + (#main - i) * cascade_offset
                     g.y = wa.y + (i - 1) * cascade_offset
-                    g.width = mainwid - (#main - 1) * cascade_offset
-                    g.height = wa.height - (#main - 1) * cascade_offset
+                    g.width = mainwid - current_cascade_offset
+                    g.height = wa.height - current_cascade_offset
                 elseif main_type == 3
                 then
                     -- Stack windows vertically.
@@ -149,7 +151,7 @@ function arrange(p)
         -- should be the leftmost item.)
         if #slave > 0
         then
-            slavewid = slavearea / #slave
+            slavewid = (wa.width - mainwid) / #slave
             slavehei = wa.height
 
             for i = 1,#slave,1
