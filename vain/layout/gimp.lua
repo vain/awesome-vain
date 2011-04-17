@@ -46,6 +46,9 @@ rules =
     named_rules.image
 }
 
+-- Offset for each window when in cascade mode.
+cascade_offset = 16
+
 -- Layout algorithm.
 name = "gimp"
 function arrange(p)
@@ -66,9 +69,8 @@ function arrange(p)
     local t = awful.tag.selected(p.screen)
     local mwfact = awful.tag.getmwfact(t)
 
-    -- If ncol is 1, all image windows are placed at the same
-    -- coordinates. Otherwise, they are stacked vertically.
-    local stack_main = awful.tag.getncol(t)
+    -- ncol determines the layout type for main/image windows.
+    local main_type = awful.tag.getncol(t)
 
     if #cls > 0
     then
@@ -105,15 +107,23 @@ function arrange(p)
                 c = main[i]
 
                 g = {}
-                if stack_main == 1
+                if main_type == 1
                 then
-                    -- Do not stack, all image windows at the same
-                    -- coordinates.
+                    -- Overlap windows, all at the same place.
                     g.x = wa.x
                     g.y = wa.y
                     g.width = mainwid
                     g.height = wa.height
-                else
+                elseif main_type == 2
+                then
+                    -- Overlap windows, cascaded.
+                    g.x = wa.x + (#main - i) * cascade_offset
+                    g.y = wa.y + (i - 1) * cascade_offset
+                    g.width = mainwid - (#main - 1) * cascade_offset
+                    g.height = wa.height - (#main - 1) * cascade_offset
+                elseif main_type == 3
+                then
+                    -- Stack windows vertically.
                     g.x = wa.x
                     g.y = wa.y + (i - 1) * mainhei
                     g.width = mainwid
