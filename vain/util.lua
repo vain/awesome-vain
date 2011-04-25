@@ -6,16 +6,9 @@ local pairs = pairs
 local ipairs = ipairs
 local table = table
 local string = string
-local capi =
-{
-    screen = screen,
-    mouse = mouse,
-    client = client,
-    keygrabber = keygrabber
-}
+local client = client
 local io = io
 local screen = screen
-local mouse = mouse
 local math = math
 
 module("vain.util")
@@ -47,7 +40,7 @@ function menu_clients_current_tags(menu, args)
             cls_t[#cls_t + 1] = { awful.util.escape(c.name) or "",
                                   function ()
                                       c.minimized = false
-                                      capi.client.focus = c
+                                      client.focus = c
                                       c:raise()
                                   end,
                                   c.icon }
