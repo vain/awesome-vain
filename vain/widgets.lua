@@ -117,25 +117,25 @@ function mailcheck(mailpath, ignore_boxes)
 end
 
 -- Battery
-function battery()
+function battery(bat)
     local mybattery = widget({ type = "textbox" })
     local mybatteryupdate = function()
 
         local first_line = vain.util.first_line
-        local present = first_line("/sys/class/power_supply/BAT0/" ..
-                                   "present")
+        local present = first_line("/sys/class/power_supply/" .. bat ..
+                                   "/present")
         if present == "1"
         then
-            local rate = first_line("/sys/class/power_supply/BAT0/" ..
-                                    "current_now")
-            local ratev = first_line("/sys/class/power_supply/BAT0/" ..
-                                     "voltage_now")
-            local rem = first_line("/sys/class/power_supply/BAT0/" ..
-                                   "charge_now")
-            local tot = first_line("/sys/class/power_supply/BAT0/" ..
-                                   "charge_full")
-            local status = first_line("/sys/class/power_supply/BAT0/" ..
-                                      "status")
+            local rate = first_line("/sys/class/power_supply/" .. bat ..
+                                    "/current_now")
+            local ratev = first_line("/sys/class/power_supply/" .. bat ..
+                                     "/voltage_now")
+            local rem = first_line("/sys/class/power_supply/" .. bat ..
+                                   "/charge_now")
+            local tot = first_line("/sys/class/power_supply/" .. bat ..
+                                   "/charge_full")
+            local status = first_line("/sys/class/power_supply/" .. bat ..
+                                      "/status")
 
             local time_rat = 0
             if status == "Charging"
