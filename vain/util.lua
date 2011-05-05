@@ -137,17 +137,27 @@ function paddivnum(num, padlen, declen)
     return intpart .. '.' .. decpart
 end
 
--- Move the mouse away: To the (bottom|top) left minus a little offset.
-function move_mouse_away(to_top)
+-- Move the mouse away: To the (bottom|top) (left|right) minus a little
+-- offset.
+-- 0 = bottom left, 1 = top left, 2 = top right, 3 = bottom right.
+function move_mouse_away(target)
     local g = {}
     local mg = screen[mouse.screen].geometry
-    g.x = mg.x + 1
 
-    if to_top
+    if target == nil then target = 0 end
+
+    if target < 2
+    then
+        g.x = mg.x + 1
+    else
+        g.x = mg.x + mg.width - 2
+    end
+
+    if target == 1 or target == 2
     then
         g.y = mg.y + 1
     else
-        g.y = mg.y + mg.height - 1
+        g.y = mg.y + mg.height - 2
     end
 
     mouse.coords(g)
