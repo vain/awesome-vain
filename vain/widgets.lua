@@ -174,7 +174,7 @@ function battery(bat)
 end
 
 -- Volume
-function volume(mixer_channel)
+function volume(mixer_channel, refresh_timeout)
     local myvolume = widget({ type = "textbox" })
     local myvolumeupdate = function()
         -- Mostly copied from vicious.
@@ -204,7 +204,7 @@ function volume(mixer_channel)
             .. ret .. '</span> '
     end
     myvolumeupdate()
-    local myvolumetimer = timer({ timeout = 2 })
+    local myvolumetimer = timer({ timeout = refresh_timeout })
     myvolumetimer:add_signal("timeout", myvolumeupdate)
     myvolumetimer:start()
     myvolume:buttons(awful.util.table.join(
