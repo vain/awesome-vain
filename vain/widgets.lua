@@ -17,7 +17,10 @@ module("vain.widgets")
 terminal = ''
 
 -- System load
-function systemload()
+function systemload(args)
+    local args = args or {}
+    local refresh_timeout = args.timeout or 10
+
     local mysysload = widget({ type = "textbox" })
     local mysysloadupdate = function()
         local f = io.open("/proc/loadavg")
@@ -30,7 +33,7 @@ function systemload()
                          .. mysysload.text .. '</span> '
     end
     mysysloadupdate()
-    local mysysloadtimer = timer({ timeout = 10 })
+    local mysysloadtimer = timer({ timeout = refresh_timeout })
     mysysloadtimer:add_signal("timeout", mysysloadupdate)
     mysysloadtimer:start()
     mysysload:buttons(awful.util.table.join(
@@ -43,17 +46,14 @@ function systemload()
 end
 
 -- Maildir check
-function mailcheck(mailpath, ignore_boxes)
+function mailcheck(args)
+    local args = args or {}
+    local mailpath = args.mailpath or os.getenv("HOME") .. "/Mail"
+    local ignore_boxes = args.ignore_boxes or {}
+    local refresh_timeout = args.refresh_timeout or 30
+
     local mymailcheck = widget({ type = "textbox" })
     local mymailcheckupdate = function()
-        -- Default mail path?
-        if mailpath == nil
-        then
-            mailpath = os.getenv("HOME") .. "/Mail"
-        else
-            mailpath = mailpath
-        end
-
         -- Search for files in "new" directories. Print only their base
         -- path.
         local p = io.popen("find " .. mailpath ..
@@ -81,8 +81,7 @@ function mailcheck(mailpath, ignore_boxes)
         for box, number in pairs(boxes)
         do
             -- Add this box only if it's not to be ignored.
-            if ignore_boxes == nil
-               or not vain.util.element_in_table(box, ignore_boxes)
+            if not vain.util.element_in_table(box, ignore_boxes)
             then
                 if newmail == ""
                 then
@@ -104,7 +103,7 @@ function mailcheck(mailpath, ignore_boxes)
         end
     end
     mymailcheckupdate()
-    local mymailchecktimer = timer({ timeout = 30 })
+    local mymailchecktimer = timer({ timeout = refresh_timeout })
     mymailchecktimer:add_signal("timeout", mymailcheckupdate)
     mymailchecktimer:start()
     mymailcheck:buttons(awful.util.table.join(
@@ -117,7 +116,11 @@ function mailcheck(mailpath, ignore_boxes)
 end
 
 -- Battery
-function battery(bat)
+function battery(args)
+    local args = args or {}
+    local bat = args.battery or "BAT0"
+    local refresh_timeout = args.refresh_timeout or 30
+
     local mybattery = widget({ type = "textbox" })
     local mybatteryupdate = function()
 
@@ -167,14 +170,18 @@ function battery(bat)
                          .. text .. '</span> '
     end
     mybatteryupdate()
-    local mybatterytimer = timer({ timeout = 30 })
+    local mybatterytimer = timer({ timeout = refresh_timeout })
     mybatterytimer:add_signal("timeout", mybatteryupdate)
     mybatterytimer:start()
     return mybattery
 end
 
 -- Volume
-function volume(mixer_channel, refresh_timeout)
+function volume(args)
+    local args = args or {}
+    local mixer_channel = args.mixer_channel or "Master"
+    local refresh_timeout = args.refresh_timeout or 2
+
     local myvolume = widget({ type = "textbox" })
     local myvolumeupdate = function()
         -- Mostly copied from vicious.
@@ -241,7 +248,10 @@ function volume(mixer_channel, refresh_timeout)
 end
 
 -- MPD
-function mpd(mixer_channel)
+function mpd(args)
+    local args = args or {}
+    local mixer_channel = args.mixer_channel or "Master"
+
     local mpdtable = {
         widget({ type = "textbox" }),
         widget({ type = "imagebox" }),
@@ -303,8 +313,11 @@ end
 net_last_t = {}
 net_last_r = {}
 
-function net(iface)
-    local delta = 2
+function net(args)
+    local args = args or {}
+    local iface = args.iface or "eth0"
+    local delta = args.refresh_timeout or 2
+
     local mynet = widget({ type = "textbox" })
     local mynetupdate = function()
         local state = vain.util.first_line('/sys/class/net/' .. iface ..
