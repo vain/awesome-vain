@@ -163,6 +163,15 @@ function move_mouse_away(target)
     mouse.coords(g)
 end
 
+-- Center the mouse on the current screen.
+function center_mouse()
+    local mg = screen[mouse.screen].geometry
+    local g = {}
+    g.x = mg.x + mg.width * 0.5
+    g.y = mg.y + mg.height * 0.5
+    mouse.coords(g)
+end
+
 -- Magnify a client: Set it to "float" and resize it.
 function magnify_client(c)
     awful.client.floating.set(c, true)
