@@ -102,7 +102,12 @@ function mailcheck(args)
                                .. '">mail: ' .. newmail .. '</span> '
         end
     end
-    mymailcheckupdate()
+    if args.initial_update == nil or args.initial_update
+    then
+        mymailcheckupdate()
+    else
+        mymailcheck.text = " no mail "
+    end
     local mymailchecktimer = timer({ timeout = refresh_timeout })
     mymailchecktimer:add_signal("timeout", mymailcheckupdate)
     mymailchecktimer:start()
@@ -374,7 +379,8 @@ end
 -- Shows the number of open tasks. On click, a terminal is spawned which
 -- first shows all those tasks and then launches a shell for you to work
 -- with gitodo.
-function gitodo()
+function gitodo(args)
+    local args = args or {}
     local widg = widget({ type = "textbox" })
 
     local mytodoupdate = function()
@@ -410,7 +416,12 @@ function gitodo()
 
         widg.text = msg
     end
-    mytodoupdate()
+    if args.initial_update == nil or args.initial_update
+    then
+        mytodoupdate()
+    else
+        widg.text = ' todo: - '
+    end
     local todotimer = timer({ timeout = 120 })
     todotimer:add_signal("timeout", mytodoupdate)
     todotimer:start()
