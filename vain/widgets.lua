@@ -54,25 +54,32 @@ function mailcheck(args)
 
     local mymailcheck = widget({ type = "textbox" })
     local mymailcheckupdate = function()
-        -- Search for files in "new" directories. Print only their base
-        -- path.
+        -- Find pathes to mailboxes.
         local p = io.popen("find " .. mailpath ..
-                           " -path '*/new/[^.]*' -type f -printf '%h\n'")
+                           " -mindepth 1 -maxdepth 1 -type d" ..
+                           " -not -name .git")
         local boxes = {}
         local line = ""
         repeat
             line = p:read("*l")
             if line ~= nil
             then
-                -- Strip off leading mailpath and anything after and
-                -- including "/new...". Save number of new mails.
-                local box = string.match(line, mailpath ..
-                                               "/*\.?([^/]+)/new.*")
-                if boxes[box] == nil
+                -- Find all files in the "new" subdirectory. For each
+                -- file, print a single character (no newline). Don't
+                -- match files that begin with a dot.
+                -- Afterwards the length of this string is the number of
+                -- new mails in that box.
+                local np = io.popen("find " .. line ..
+                                    "/new -mindepth 1 -type f " ..
+                                    "-not -name '.*' -printf a")
+                local mailstring = np:read("*all")
+
+                -- Strip off leading mailpath and the leading dot.
+                local box = string.match(line, mailpath .. "/*\.?([^/]+)")
+                local nummails = string.len(mailstring)
+                if nummails > 0
                 then
-                    boxes[box] = 1
-                else
-                    boxes[box] = boxes[box] + 1
+                    boxes[box] = nummails
                 end
             end
         until line == nil
