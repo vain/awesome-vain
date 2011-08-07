@@ -105,7 +105,7 @@ function mailcheck(args)
             mymailcheck.text = " no mail "
         else
             mymailcheck.text = ' <span color="'
-                               .. beautiful.border_focus
+                               .. (beautiful.mailcheck_new or "#FF0000")
                                .. '">mail: ' .. newmail .. '</span> '
         end
     end
