@@ -61,7 +61,9 @@ function arrange(p)
         g.y = wa.y
         if useless_gap > 0
         then
-            g.width = g.width - 2 * useless_gap
+            -- Reduce width once and move window to the right. Reduce
+            -- height twice, however.
+            g.width = g.width - useless_gap
             g.height = g.height - 2 * useless_gap
             g.x = g.x + useless_gap
             g.y = g.y + useless_gap
@@ -83,9 +85,19 @@ function arrange(p)
                 if useless_gap > 0
                 then
                     g.width = g.width - 2 * useless_gap
-                    g.height = g.height - 2 * useless_gap
+                    if i == 1
+                    then
+                        -- This is the topmost client. Push it away from
+                        -- the screen border (add to g.y and subtract
+                        -- useless_gap once) and additionally shrink its
+                        -- height.
+                        g.height = g.height - 2 * useless_gap
+                        g.y = g.y + useless_gap
+                    else
+                        -- All other clients.
+                        g.height = g.height - useless_gap
+                    end
                     g.x = g.x + useless_gap
-                    g.y = g.y + useless_gap
                 end
                 c:geometry(g)
             end
