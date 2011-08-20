@@ -133,10 +133,20 @@ function arrange(p)
 
                 if useless_gap > 0
                 then
+                    -- If we're stacking and this is not the topmost
+                    -- client, then only reduce height once. Otherwise
+                    -- it's either the topmost client or we're not
+                    -- stacking, hence add the useless_gap on both
+                    -- sides.
+                    if main_type >= 3 and i ~= 1
+                    then
+                        g.height = g.height - useless_gap
+                    else
+                        g.height = g.height - 2 * useless_gap
+                        g.y = g.y + useless_gap
+                    end
                     g.width = g.width - 2 * useless_gap
-                    g.height = g.height - 2 * useless_gap
                     g.x = g.x + useless_gap
-                    g.y = g.y + useless_gap
                 end
 
                 c:geometry(g)
@@ -165,9 +175,10 @@ function arrange(p)
 
                 if useless_gap > 0
                 then
-                    g.width = g.width - 2 * useless_gap
+                    -- Never push slaves in x direction because the main
+                    -- windows already added a useless_gap there.
+                    g.width = g.width - useless_gap
                     g.height = g.height - 2 * useless_gap
-                    g.x = g.x + useless_gap
                     g.y = g.y + useless_gap
                 end
 
