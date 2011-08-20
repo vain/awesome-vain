@@ -123,8 +123,7 @@ function arrange(p)
                     g.y = wa.y + (i - 1) * cascade_offset
                     g.width = mainwid - current_cascade_offset
                     g.height = wa.height - current_cascade_offset
-                elseif main_type == 3
-                then
+                else
                     -- Stack windows vertically.
                     g.x = wa.x
                     g.y = wa.y + (i - 1) * mainhei
