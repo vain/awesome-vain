@@ -80,10 +80,24 @@ function arrange(p)
             g.y = wa.y + this_y * g.height
             if useless_gap > 0
             then
-                g.width = g.width - 2 * useless_gap
-                g.height = g.height - 2 * useless_gap
-                g.x = g.x + useless_gap
-                g.y = g.y + useless_gap
+                -- Top and left clients are shrinked by two steps and
+                -- get moved away from the border. Other clients just
+                -- get shrinked in one direction.
+                if this_x == 0
+                then
+                    g.width = g.width - 2 * useless_gap
+                    g.x = g.x + useless_gap
+                else
+                    g.width = g.width - useless_gap
+                end
+
+                if this_y == 0
+                then
+                    g.height = g.height - 2 * useless_gap
+                    g.y = g.y + useless_gap
+                else
+                    g.height = g.height - useless_gap
+                end
             end
             c:geometry(g)
             remaining_clients = remaining_clients - 1
