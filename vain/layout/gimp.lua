@@ -34,7 +34,8 @@ local named_rules =
         properties =
         {
             floating = false
-        }
+        },
+        callback = awful.titlebar.add
     },
 }
 
