@@ -19,7 +19,7 @@ terminal = ''
 -- System load
 function systemload(args)
     local args = args or {}
-    local refresh_timeout = args.timeout or 10
+    local refresh_timeout = args.refresh_timeout or 10
     local only_show_recent = args.only_show_recent or true
 
     local mysysload = widget({ type = "textbox" })
@@ -55,7 +55,7 @@ end
 -- Show memory usage (ignoring caches)
 function memusage(args)
     local args = args or {}
-    local refresh_timeout = args.timeout or 10
+    local refresh_timeout = args.refresh_timeout or 10
 
     local widg = widget({ type = "textbox" })
     local upd = function()
