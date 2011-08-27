@@ -52,6 +52,49 @@ function systemload(args)
     return mysysload
 end
 
+-- Show memory usage (ignoring caches)
+function memusage(args)
+    local args = args or {}
+    local refresh_timeout = args.timeout or 10
+
+    local widg = widget({ type = "textbox" })
+    local upd = function()
+        -- Get MEM info. Base code borrowed from Vicious, but I don't care
+        -- about swap space.
+        -- Note to self: Numbers in meminfo are KiB although it says kB.
+        -- Actually, I'd like to use MB rather than MiB, but `htop` uses
+        -- MiB, too, so I'll keep it consistent.
+        local mem = {}
+        for line in io.lines("/proc/meminfo")
+        do
+            for k, v in string.gmatch(line, "([%a]+):[%s]+([%d]+).+")
+            do
+                if     k == "MemTotal"  then mem.total = math.floor(v / 1024)
+                elseif k == "MemFree"   then mem.free  = math.floor(v / 1024)
+                elseif k == "Buffers"   then mem.buf   = math.floor(v / 1024)
+                elseif k == "Cached"    then mem.cache = math.floor(v / 1024)
+                end
+            end
+        end
+
+        used = mem.total - (mem.free + mem.buf + mem.cache)
+        fmt = "%" .. string.len(mem.total) .. ".0f/%.0f MB"
+        widg.text = ' <span color="' .. beautiful.fg_urgent .. '">'
+                    .. string.format(fmt, used, mem.total) .. '</span> '
+    end
+    upd()
+    local tmr = timer({ timeout = refresh_timeout })
+    tmr:add_signal("timeout", upd)
+    tmr:start()
+    widg:buttons(awful.util.table.join(
+        awful.button({}, 0,
+            function()
+                awful.util.spawn(terminal .. ' -e htop')
+            end)
+    ))
+    return widg
+end
+
 -- Maildir check
 function mailcheck(args)
     local args = args or {}
