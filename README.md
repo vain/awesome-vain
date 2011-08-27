@@ -329,6 +329,24 @@ Show the current system load in a textbox. Read it directly from
 
 A click on the widget will call `htop` in your `terminal`.
 
+The function takes a table as an optional argument. That table may
+contain:
+
+    .refresh_timeout: Defaults to 10 seconds.
+	.show_only_recent: Show all three values or only the first one?
+
+## memusage
+Show used memory and total memory in MiB. Read from `/proc/meminfo`.
+
+	mymemusage = vain.widgets.memusage()
+
+A click on the widget will call `htop` in your `terminal`.
+
+The function takes a table as an optional argument. That table may
+contain:
+
+    .refresh_timeout: Defaults to 10 seconds.
+
 ## mailcheck
 Check Maildirs and show the result in a textbox. For example, I have a
 set of Maildirs below `~/Mail`:
@@ -358,15 +376,25 @@ directories. To do so, it calls `find`. If there's new mail, the textbox
 will say something like "mail: bugs(3), system(1)", otherwise it says
 "no mail".
 
-`mailcheck` takes a path and a table of mailboxes to be ignored. Both
-are essentially optional (use `nil`). This will use the default path
-(`~/Mail`) and ignore messages in the `lists` box:
+	mymailcheck = vain.widgets.mailcheck()
 
-	mymailcheck = vain.widgets.mailcheck(nil, { "lists" })
+The function takes a table as an optional argument. That table may
+contain:
+
+    .refresh_timeout: Defaults to 30 seconds.
+	.mailpath: Path to your maildirs, defaults to `~/Mail`.
+	.ignore_boxes: Another table which lists boxes to ignore. Don't add
+		the leading dot. That is, `lists` would ignore `.lists` in the
+		example above. Defaults to an empty table.
+	.initial_update: Check for mail when starting Awesome or wait for
+		the first refresh timeout? Defaults to the former.
 
 When clicking on the widget, `muttgit.sh` is called. That's a wrapper
 script for [mutt](http://www.mutt.org/) which I use: It automatically
 commits to a [git](http://git-scm.com/) repository after I've read mail.
+
+`beautiful.mailcheck_new` may contain a color. The new-mail-message is
+shown in this color. Uses red if undefined.
 
 ## battery
 Show the remaining time and capacity of your laptop battery, as well as
@@ -374,32 +402,78 @@ the current wattage. Uses the `/sys` filesystem.
 
 	mybattery = vain.widgets.battery()
 
+The function takes a table as an optional argument. That table may
+contain:
+
+    .refresh_timeout: Defaults to 30 seconds.
+	.battery: Identifier of the battery to watch, defaults to `BAT0`.
+
 ## volume
 Show and control the current volume in a textbox. Periodically calls
-`amixer` to get the current volume.
+the `control_volume.sh` script to get the current volume. That same
+script is used to set the volume. See below.
 
 * Left click: Mute/unmute.
 * Right click: Mute/unmute.
 * Middle click: Launch `alsamixer` in your `terminal`.
 * Scroll wheel: Increase/decrase volume.
 
-It takes an argument `mixer_channel` which is something like `Master` or
-`PCM`.
+	myvolume = vain.widgets.volume()
 
-	myvolume = vain.widgets.volume('PCM')
+The function takes a table as an optional argument. That table may
+contain:
+
+    .refresh_timeout: Defaults to 2 seconds.
+	.mixer_channel: Defaults to `Master`.
+
+I currently use a script similar to the following as
+`control_volume.sh`:
+
+	#!/bin/bash
+	channel=${2:-Master}
+	case $1 in
+		up)
+			mpc volume +2
+			;;
+		down)
+			mpc volume -2
+			;;
+		toggle)
+			amixer set $channel toggle
+			;;
+		get)
+			mpc volume | sed -r 's/^volume: ?([^%]+)%.*/\1/'
+
+			echo -n ' '
+
+			amixer get $channel |
+			sed -rn 's/.*\[([a-z]+)\]/\1/p' |
+			head -1
+			;;
+	esac
+
+That is, I get and set volume via
+[mpd](http://en.wikipedia.org/wiki/Music_Player_Daemon). I used to do
+all of that via `amixer` but this tool gets more and more broken. For
+example, once the volume reached 0%, `amixer` can't get it back.
+
+This is a very ugly solution. I decided to use a wrapper script so I
+don't need to touch my Awesome configuration once I find a better
+solution.
 
 ## mpd
 Provides a set of imageboxes to control a running instance of mpd on
 your local host. Also provides controls similiar to the volume widget.
 To control mpd, `mpc` is used.
 
-* Right click on any icon: Mute/unmute via `amixer`.
+* Right click on any icon: Mute/unmute via `control_volume.sh`. See
+  above.
 * Middle click on any icon: Call `ncmpcpp` in your `terminal`.
 
 This function does not return one widget but a table of widgets. For
 now, you'll have to add them one for one to your wibox:
 
-	mpdtable = vain.widgets.mpd(mixer_channel)
+	mpdtable = vain.widgets.mpd()
 	...
 	mywibox[s].widgets = {
 	    ...
@@ -412,11 +486,37 @@ now, you'll have to add them one for one to your wibox:
 	    ...
 	}
 
+The function takes a table as an optional argument. That table may
+contain:
+
+	.mixer_channel: Defaults to `Master`.
+
 ## net
 Monitors network interfaces and shows current traffic in a textbox. If
 the interface is not present or if there's not enough data yet, you'll
 see `wlan0: -` or similar.  Otherwise, the current traffic is shown in
 kilobytes per second as `eth0: ↑(00,010.2), ↓(01,037.8)` or similar.
+
+	neteth0 = vain.widgets.net()
+
+The function takes a table as an optional argument. That table may
+contain:
+
+	.refresh_timeout: Defaults to 2 seconds.
+	.iface: Defaults to `eth0`.
+
+## gitodo
+This is an integration of [gitodo](https://github.com/vain/gitodo) into
+Awesome.
+
+	todolist = vain.widgets.gitodo()
+
+The function takes a table as an optional argument. That table may
+contain:
+
+	.refresh_timeout: Defaults to 120 seconds.
+	.initial_update: Check for todo items when starting Awesome or wait
+		for the first refresh timeout? Defaults to the former.
 
 
 Utility functions
