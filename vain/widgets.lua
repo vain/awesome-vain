@@ -435,6 +435,7 @@ end
 function gitodo(args)
     local args = args or {}
     local widg = widget({ type = "textbox" })
+    local refresh_timeout = args.refresh_timeout or 120
 
     local mytodoupdate = function()
         local f = io.popen("gitodo --count")
@@ -475,7 +476,7 @@ function gitodo(args)
     else
         widg.text = ' todo: - '
     end
-    local todotimer = timer({ timeout = 120 })
+    local todotimer = timer({ timeout = refresh_timeout })
     todotimer:add_signal("timeout", mytodoupdate)
     todotimer:start()
 
