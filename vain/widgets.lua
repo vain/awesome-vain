@@ -449,7 +449,8 @@ function gitodo(args)
 
         if tonumber(outdated) > 0
         then
-            msg = msg .. '<span color="' .. beautiful.border_focus
+            msg = msg .. '<span color="'
+                      .. (beautiful.gitodo_outdated or beautiful.border_focus)
                       .. '">'
                       .. outdated
                       .. '</span>, '
@@ -457,13 +458,15 @@ function gitodo(args)
 
         if tonumber(warning) > 0
         then
-            msg = msg .. '<span color="' .. beautiful.fg_urgent
+            msg = msg .. '<span color="'
+                      .. (beautiful.gitodo_warning or beautiful.fg_urgent)
                       .. '">'
                       .. warning
                       .. '</span>, '
         end
 
-        msg = msg .. '<span color="' .. beautiful.fg_urgent
+        msg = msg .. '<span color="'
+                  .. (beautiful.gitodo_normal or beautiful.fg_urgent)
                   .. '">'
                   .. all
                   .. '</span> '
