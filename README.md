@@ -518,6 +518,10 @@ contain:
 	.initial_update: Check for todo items when starting Awesome or wait
 		for the first refresh timeout? Defaults to the former.
 
+`beautiful.gitodo_normal` is used as the color for non-outdated items,
+`beautiful.gitodo_warning` for those items close to their deadline and
+`beautiful.gitodo_outdated` is the color of outdated items.
+
 
 Utility functions
 =================
