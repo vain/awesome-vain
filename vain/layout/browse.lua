@@ -67,6 +67,13 @@ function arrange(p)
             g.height = g.height - 2 * useless_gap
             g.x = g.x + useless_gap
             g.y = g.y + useless_gap
+
+            -- When there's no window to the right, add an additional
+            -- gap.
+            if overlap_main == 1
+            then
+                g.width = g.width - useless_gap
+            end
         end
         c:geometry(g)
 
