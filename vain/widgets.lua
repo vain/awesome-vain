@@ -124,8 +124,8 @@ function mailcheck(args)
                                     "-not -name '.*' -printf a")
                 local mailstring = np:read("*all")
 
-                -- Strip off leading mailpath and the leading dot.
-                local box = string.match(line, mailpath .. "/*\.?([^/]+)")
+                -- Strip off leading mailpath.
+                local box = string.match(line, mailpath .. "/*([^/]+)")
                 local nummails = string.len(mailstring)
                 if nummails > 0
                 then
