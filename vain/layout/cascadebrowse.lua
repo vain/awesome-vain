@@ -7,7 +7,8 @@ local print = print
 
 module("vain.layout.cascadebrowse")
 
-cascade_offset = 32
+cascade_offset_x = 5
+cascade_offset_y = 32
 
 name = "cascadebrowse"
 function arrange(p)
@@ -55,7 +56,8 @@ function arrange(p)
     then
         how_many = num_c
     end
-    local current_cascade_offset = cascade_offset * (how_many - 1)
+    local current_cascade_offset_x = cascade_offset_x * (how_many - 1)
+    local current_cascade_offset_y = cascade_offset_y * (how_many - 1)
 
     if #cls > 0
     then
@@ -100,10 +102,10 @@ function arrange(p)
             do
                 c = cls[i]
                 g = {}
-                g.width = slavewid
-                g.height = wa.height - current_cascade_offset
-                g.x = wa.x + mainwid
-                g.y = wa.y + (i - 1) * cascade_offset
+                g.width = slavewid - current_cascade_offset_x
+                g.height = wa.height - current_cascade_offset_y
+                g.x = wa.x + mainwid + (how_many - i) * cascade_offset_x
+                g.y = wa.y + (i - 1) * cascade_offset_y
                 if useless_gap > 0
                 then
                     g.width = g.width - 2 * useless_gap
