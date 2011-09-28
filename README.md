@@ -278,6 +278,33 @@ this set of rules with your existing rules:
 You can still use your own rules, for example, to move Gimp windows to a
 specific tag.
 
+### cascade
+Cascade all windows (see gimp layout) of a tag.
+
+Similarly, you can control the offsets by setting those two variables:
+
+	vain.layout.cascade.cascade_offset_x = 64
+	vain.layout.cascade.cascade_offset_y = 16
+
+The following reserves space for 5 windows:
+
+	awful.tag.setnmaster(5, tags[s][1])
+
+That is, no window will get resized upon the creation of a new window,
+unless there's more than 5 windows.
+
+### cascadebrowse
+Similar to the regular `browse` layout, however, clients in the slave
+column are cascaded instead of tiled. Thus, there's a similar set of
+settings:
+
+	vain.layout.cascadebrowse.cascade_offset_x = 2
+	vain.layout.cascadebrowse.cascade_offset_y = 32
+	awful.tag.setnmaster(5, tags[s][1])
+
+I recommend setting `cascade_offset_x` to a very small value or even 0
+to avoid wasting space.
+
 ### uselessfair
 This is a duplicate of the stock `fair` layouts. However, I added
 "useless gaps" (see below) to this layout. Use it like this:
