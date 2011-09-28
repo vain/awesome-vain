@@ -332,7 +332,7 @@ A click on the widget will call `htop` in your `terminal`.
 The function takes a table as an optional argument. That table may
 contain:
 
-    .refresh_timeout: Defaults to 10 seconds.
+	.refresh_timeout: Defaults to 10 seconds.
 	.show_only_recent: Show all three values or only the first one?
 
 ## memusage
@@ -345,7 +345,7 @@ A click on the widget will call `htop` in your `terminal`.
 The function takes a table as an optional argument. That table may
 contain:
 
-    .refresh_timeout: Defaults to 10 seconds.
+	.refresh_timeout: Defaults to 10 seconds.
 
 ## mailcheck
 Check Maildirs and show the result in a textbox. For example, I have a
@@ -355,15 +355,15 @@ set of Maildirs below `~/Mail`:
 	/home/void/Mail
 	$ tree -ad
 	.
-	|-- .bugs
+	|-- bugs
 	|   |-- cur
 	|   |-- new
 	|   `-- tmp
-	|-- .lists
+	|-- lists
 	|   |-- cur
 	|   |-- new
 	|   `-- tmp
-	|-- .system
+	|-- system
 	|   |-- cur
 	|   |-- new
 	|   `-- tmp
@@ -381,11 +381,10 @@ will say something like "mail: bugs(3), system(1)", otherwise it says
 The function takes a table as an optional argument. That table may
 contain:
 
-    .refresh_timeout: Defaults to 30 seconds.
+	.refresh_timeout: Defaults to 30 seconds.
 	.mailpath: Path to your maildirs, defaults to `~/Mail`.
-	.ignore_boxes: Another table which lists boxes to ignore. Don't add
-		the leading dot. That is, `lists` would ignore `.lists` in the
-		example above. Defaults to an empty table.
+	.ignore_boxes: Another table which lists boxes (just the last part,
+		like `lists`) to ignore. Defaults to an empty table.
 	.initial_update: Check for mail when starting Awesome or wait for
 		the first refresh timeout? Defaults to the former.
 
@@ -405,7 +404,7 @@ the current wattage. Uses the `/sys` filesystem.
 The function takes a table as an optional argument. That table may
 contain:
 
-    .refresh_timeout: Defaults to 30 seconds.
+	.refresh_timeout: Defaults to 30 seconds.
 	.battery: Identifier of the battery to watch, defaults to `BAT0`.
 
 ## volume
@@ -423,7 +422,7 @@ script is used to set the volume. See below.
 The function takes a table as an optional argument. That table may
 contain:
 
-    .refresh_timeout: Defaults to 2 seconds.
+	.refresh_timeout: Defaults to 2 seconds.
 	.mixer_channel: Defaults to `Master`.
 
 I currently use a script similar to the following as
