@@ -487,7 +487,9 @@ function gitodo(args)
         awful.button({}, 0,
             function()
                 awful.util.spawn(terminal
-                                 .. ' -e bash -c "gitodo; echo; bash"')
+                                 .. ' -e bash -c "gitodo --raw | '
+                                 .. 'cut -d\\" \\" -f2 | highcal; '
+                                 .. 'echo; gitodo; echo; exec bash"')
             end)
     ))
 
