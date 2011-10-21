@@ -171,7 +171,7 @@ function mailcheck(args)
     mymailcheck:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal .. ' -e muttgit.sh')
+                awful.util.spawn(terminal .. ' -e bash -i -c smail')
             end)
     ))
     return mymailcheck

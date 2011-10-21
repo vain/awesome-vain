@@ -415,9 +415,10 @@ contain:
 	.initial_update: Check for mail when starting Awesome or wait for
 		the first refresh timeout? Defaults to the former.
 
-When clicking on the widget, `muttgit.sh` is called. That's a wrapper
-script for [mutt](http://www.mutt.org/) which I use: It automatically
-commits to a [git](http://git-scm.com/) repository after I've read mail.
+When clicking on the widget, the bash alias `smail` is called. That's a
+wrapper script for [mutt](http://www.mutt.org/) which I use: It
+automatically commits to a [git](http://git-scm.com/) repository after
+I've read mail.
 
 `beautiful.mailcheck_new` may contain a color. The new-mail-message is
 shown in this color. Uses red if undefined.
