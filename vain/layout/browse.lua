@@ -3,6 +3,7 @@ local ipairs = ipairs
 local tonumber = tonumber
 local beautiful = beautiful
 local awful = awful
+local math = math
 
 module("vain.layout.browse")
 
@@ -46,7 +47,7 @@ function arrange(p)
         -- Main column, fixed width and height.
         local c = cls[#cls]
         local g = {}
-        local mainwid = wa.width * mwfact
+        local mainwid = math.floor(wa.width * mwfact)
         local slavewid = wa.width - mainwid
 
         if overlap_main == 1
@@ -80,13 +81,18 @@ function arrange(p)
         -- Remaining clients stacked in slave column, new ones on top.
         if #cls > 1
         then
-            local slavehei = wa.height / (#cls - 1)
+            local slavehei = math.floor(wa.height / (#cls - 1))
             for i = (#cls - 1),1,-1
             do
                 c = cls[i]
                 g = {}
                 g.width = slavewid
-                g.height = slavehei
+                if i == (#cls - 1)
+                then
+                    g.height = wa.height - (#cls - 2)*slavehei
+		else
+                    g.height = slavehei
+                end
                 g.x = wa.x + mainwid
                 g.y = wa.y + (i - 1) * slavehei
                 if useless_gap > 0
