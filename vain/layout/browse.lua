@@ -89,8 +89,8 @@ function arrange(p)
                 g.width = slavewid
                 if i == (#cls - 1)
                 then
-                    g.height = wa.height - (#cls - 2)*slavehei
-		else
+                    g.height = wa.height - (#cls - 2) * slavehei
+                else
                     g.height = slavehei
                 end
                 g.x = wa.x + mainwid

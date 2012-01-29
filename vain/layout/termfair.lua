@@ -76,15 +76,15 @@ function arrange(p)
 
             -- Calc geometry.
             local g = {}
-            if this_x ==(num_x-1)
+            if this_x == (num_x - 1)
             then
-                g.width = wa.width - (num_x-1)*width
+                g.width = wa.width - (num_x - 1) * width
             else
                 g.width = width
             end
-            if this_y ==  (num_y-1)
+            if this_y == (num_y - 1)
             then
-                g.height = wa.height -  (num_y-1)*height
+                g.height = wa.height - (num_y - 1) * height
             else
                 g.height = height
             end
