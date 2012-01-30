@@ -104,20 +104,28 @@ floating clients, order of clients, focus, drawing window borders etc.
 What about icons?
 -----------------
 
-I don't provide icons for the layout box. This is the job of your theme.
-Assuming you use `beautiful` for theming (you most probably do), you
-have to extend your theme like this:
+Thanks to Nicolas Estibals (https://github.com/nestibal) for creating
+icons for awesome's default theme!
 
-	...
-	theme.layout_fullscreen = "/usr/share/awesome/themes/zenburn/layouts/fullscreen.png"
-	theme.layout_magnifier  = "/usr/share/awesome/themes/zenburn/layouts/magnifier.png"
-	theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.png"
-	theme.layout_termfair   = os.getenv("HOME") .. "/.config/awesome/themes/layout_termfair.png"
-	theme.layout_browse     = os.getenv("HOME") .. "/.config/awesome/themes/layout_browse.png"
-	theme.layout_gimp       = os.getenv("HOME") .. "/.config/awesome/themes/layout_gimp.png"
-	...
+You have to extend your theme like this (let's say this file is called
+`~/.config/awesome/extended_default_theme.lua`):
 
-If there's no icon for a layout, it'll simply be empty.
+	dofile("/usr/share/awesome/themes/default/theme.lua")
+	...
+	theme.layout_termfair      = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/termfairw.png"
+	theme.layout_browse        = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/browsew.png"
+	theme.layout_gimp          = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/gimpw.png"
+	theme.layout_cascade       = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/cascadew.png"
+	theme.layout_cascadebrowse = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/cascadebrowsew.png"
+	...
+	return theme
+
+Then, you can tell `beautiful` to use this extended theme:
+
+	beautiful.init(os.getenv("HOME") .. "/.config/awesome/extended_default_theme.lua")
+
+Icons for the default theme are available in black and white. There's
+also a set of icons for the "zenburn" theme (this is what I use).
 
 What do my layouts do?
 ----------------------
