@@ -368,7 +368,7 @@ The function takes a table as an optional argument. That table may
 contain:
 
 	.refresh_timeout: Defaults to 10 seconds.
-	.show_only_recent: Show all three values or only the first one?
+	.show_all: Show all three values or by default only the first one?
 
 ## memusage
 Show used memory and total memory in MiB. Read from `/proc/meminfo`.
