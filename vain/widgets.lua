@@ -20,7 +20,7 @@ terminal = ''
 function systemload(args)
     local args = args or {}
     local refresh_timeout = args.refresh_timeout or 10
-    local only_show_recent = args.only_show_recent or true
+    local show_all = args.show_all or false
 
     local mysysload = widget({ type = "textbox" })
     local mysysloadupdate = function()
@@ -28,13 +28,13 @@ function systemload(args)
         local ret = f:read("*all")
         f:close()
 
-        if only_show_recent
+        if show_all
         then
-            local a = string.match(ret, "([^%s]+) ")
-            mysysload.text = string.format("%s", a)
-        else
             local a, b, c = string.match(ret, "([^%s]+) ([^%s]+) ([^%s]+)")
             mysysload.text = string.format("%s %s %s", a, b, c)
+        else
+            local a = string.match(ret, "([^%s]+) ")
+            mysysload.text = string.format("%s", a)
         end
         mysysload.text = ' <span color="' .. beautiful.fg_urgent .. '">'
                          .. mysysload.text .. '</span> '
