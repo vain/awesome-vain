@@ -214,6 +214,10 @@ separate column for slave windows.
 	awful.tag.setncol(2, tags[1][7])
 
 ### gimp
+*Please note: Since Gimp 2.8, this layout is deprecated and no longer
+maintained. It may still work but I don't use it anymore. Gimp 2.8 has a
+"single window mode" which does all I need.*
+
 Gimp is something very special. A lot of people don't use Gimp because
 it has "so many windows". Using an own layout for Awesome, you can solve
 this "problem". (I don't consider it a problem, actually.)

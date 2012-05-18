@@ -1,3 +1,8 @@
+-- Please note: Since Gimp 2.8, this layout is deprecated and no longer
+-- maintained. It may still work but I don't use it anymore. Gimp 2.8
+-- has a "single window mode" which does all I need.
+
+
 -- Grab environment.
 local ipairs = ipairs
 local table = table
