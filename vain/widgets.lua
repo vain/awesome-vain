@@ -104,10 +104,16 @@ function cpuusage(args)
     -- Record current (first) data.
     cpuusage_lastactive, cpuusage_lasttotal = readcurrent()
 
-    -- Set up timer and initial text.
+    -- Set up timer, buttons and initial text.
     local cpuusagetimer = timer({ timeout = refresh_timeout })
     cpuusagetimer:add_signal("timeout", cpuusageupdate)
     cpuusagetimer:start()
+    w:buttons(awful.util.table.join(
+        awful.button({}, 0,
+            function()
+                awful.util.spawn(terminal .. ' -e htop')
+            end)
+    ))
     w.text = ' cpu: '
              .. '<span color="' .. beautiful.fg_focus .. '">'
              .. '  0%'

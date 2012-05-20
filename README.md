@@ -380,6 +380,8 @@ Show the average CPU usage for a given amount of time. This is what
 
 	mycpuusage = vain.widgets.cpuusage()
 
+A click on the widget will call `htop` in your `terminal`.
+
 The function takes a table as an optional argument. That table may
 contain:
 
