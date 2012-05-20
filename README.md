@@ -374,6 +374,17 @@ contain:
 	.refresh_timeout: Defaults to 10 seconds.
 	.show_all: Show all three values or by default only the first one?
 
+## cpuusage
+Show the average CPU usage for a given amount of time. This is what
+`htop` does.
+
+	mycpuusage = vain.widgets.cpuusage()
+
+The function takes a table as an optional argument. That table may
+contain:
+
+	.refresh_timeout: Defaults to 10 seconds.
+
 ## memusage
 Show used memory and total memory in MiB. Read from `/proc/meminfo`.
 

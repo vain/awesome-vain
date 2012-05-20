@@ -52,6 +52,71 @@ function systemload(args)
     return mysysload
 end
 
+cpuusage_lasttotal = 0
+cpuusage_lastactive = 0
+function cpuusage(args)
+    local args = args or {}
+    local refresh_timeout = args.refresh_timeout or 10
+
+    local w = widget({ type = "textbox" })
+
+    local readcurrent = function()
+        -- Read the amount of time the CPUs have spent performing
+        -- different kinds of work. Read the first line of /proc/stat
+        -- which is the sum of all CPUs.
+        local times = vain.util.first_line("/proc/stat")
+        local at = 1
+        local idle = 0
+        local total = 0
+        for field in string.gmatch(times, "[%s]+([^%s]+)")
+        do
+            -- 3 = idle, 4 = ioWait. Essentially, the CPUs have done
+            -- nothing during these times.
+            if at == 3 or at == 4
+            then
+                idle = idle + field
+            end
+            total = total + field
+            at = at + 1
+        end
+        local active = total - idle
+
+        return active, total
+    end
+
+    local cpuusageupdate = function()
+        -- Read current data and calculate relative values.
+        local nowactive, nowtotal = readcurrent()
+        local dactive = nowactive - cpuusage_lastactive
+        local dtotal = nowtotal - cpuusage_lasttotal
+        w.text = ' cpu: '
+                 .. '<span color="' .. beautiful.fg_focus .. '">'
+                 .. string.format('%3s', math.floor((dactive / dtotal) * 100))
+                 .. '%'
+                 .. '</span>'
+                 .. ' '
+
+        -- Save current data for the next run.
+        cpuusage_lastactive = nowactive
+        cpuusage_lasttotal = nowtotal
+    end
+
+    -- Record current (first) data.
+    cpuusage_lastactive, cpuusage_lasttotal = readcurrent()
+
+    -- Set up timer and initial text.
+    local cpuusagetimer = timer({ timeout = refresh_timeout })
+    cpuusagetimer:add_signal("timeout", cpuusageupdate)
+    cpuusagetimer:start()
+    w.text = ' cpu: '
+             .. '<span color="' .. beautiful.fg_focus .. '">'
+             .. '  0%'
+             .. '</span>'
+             .. ' '
+
+    return w
+end
+
 -- Show memory usage (ignoring caches)
 function memusage(args)
     local args = args or {}
