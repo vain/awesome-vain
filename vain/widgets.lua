@@ -91,7 +91,7 @@ function cpuusage(args)
         local dtotal = nowtotal - cpuusage_lasttotal
         w.text = ' cpu: '
                  .. '<span color="' .. beautiful.fg_focus .. '">'
-                 .. string.format('%3s', math.floor((dactive / dtotal) * 100))
+                 .. string.format('%3s', math.ceil((dactive / dtotal) * 100))
                  .. '%'
                  .. '</span>'
                  .. ' '
