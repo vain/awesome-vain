@@ -1,6 +1,7 @@
 -- Grab environment.
 local awful = awful
 local naughty = naughty
+local beautiful = beautiful
 local mouse = mouse
 local pairs = pairs
 local ipairs = ipairs
@@ -10,6 +11,7 @@ local client = client
 local io = io
 local screen = screen
 local math = math
+local tonumber = tonumber
 
 module("vain.util")
 
@@ -191,6 +193,65 @@ end
 -- See also: http://lua-users.org/wiki/StringTrim
 function trim(s)
     return s:match "^%s*(.-)%s*$"
+end
+
+-- Split a string.
+-- See also: http://lua-users.org/wiki/SplitJoin
+function split(s, sep)
+    local sep, fields = sep or ":", {}
+    local pattern = string.format("([^%s]+)", sep)
+    string.gsub(s, pattern, function(c) fields[#fields+1] = c end)
+    return fields
+end
+
+-- Read the nice value of pid from /proc.
+function get_nice_value(pid)
+    local n = first_line('/proc/' .. pid .. '/stat')
+    if n == nil
+    then
+        -- This should not happen. But I don't want to crash, either.
+        return 0
+    end
+
+    -- Remove pid and tcomm. This is necessary because tcomm may contain
+    -- nasty stuff such as whitespace or additional parentheses...
+    n = string.gsub(n, '.*%) ', '')
+
+    -- Field number 17 now is the nice value.
+    fields = split(n, ' ')
+    return tonumber(fields[17])
+end
+
+-- To be used as a signal handler for "focus":
+--    client.add_signal("focus", vain.util.niceborder_focus)
+-- This requires beautiful.border_focus{,_highprio,_lowprio}.
+function niceborder_focus(c)
+    local n = get_nice_value(c.pid)
+    if n == 0
+    then
+        c.border_color = beautiful.border_focus
+    elseif n < 0
+    then
+        c.border_color = beautiful.border_focus_highprio
+    else
+        c.border_color = beautiful.border_focus_lowprio
+    end
+end
+
+-- To be used as a signal handler for "unfocus":
+--    client.add_signal("unfocus", vain.util.niceborder_unfocus)
+-- This requires beautiful.border_normal{,_highprio,_lowprio}.
+function niceborder_unfocus(c)
+    local n = get_nice_value(c.pid)
+    if n == 0
+    then
+        c.border_color = beautiful.border_normal
+    elseif n < 0
+    then
+        c.border_color = beautiful.border_normal_highprio
+    else
+        c.border_color = beautiful.border_normal_lowprio
+    end
 end
 
 -- vim: set et :

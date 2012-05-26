@@ -609,3 +609,29 @@ the currently used layout. Use it with a client keybinding like this:
 
 If you want to "de-magnify" it, just reset the clients floating state to
 `false` (hit `Mod`+`CTRL`+`Space`, for example).
+
+## Window borders colored according to nice values
+By default, your `rc.lua` contains something like this:
+
+	client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+	client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+You can change it to this:
+
+	client.add_signal("focus", vain.util.niceborder_focus)
+	client.add_signal("unfocus", vain.util.niceborder_unfocus)
+
+Now, when a client is focused or unfocused, awesome will look up its
+nice value in `/proc/<pid>/stat`. If it's less than 0, this window is
+classified as "high priority"; if it's greater than 0, the window is
+classified as "low priority". If it's equal to 0, nothing special
+happens.
+
+This requires to define additional colors in your `theme.lua`. This is
+what I use:
+
+	theme.border_focus_highprio  = "#FF0000"
+	theme.border_normal_highprio = "#A03333"
+
+	theme.border_focus_lowprio   = "#3333FF"
+	theme.border_normal_lowprio  = "#333366"
