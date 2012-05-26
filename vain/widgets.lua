@@ -318,7 +318,7 @@ function volume(args)
     local myvolume = widget({ type = "textbox" })
     local myvolumeupdate = function()
         -- Mostly copied from vicious.
-        local f = io.popen("control_volume.sh get " .. mixer_channel)
+        local f = io.popen("control_volume get " .. mixer_channel)
         local mixer = f:read("*all")
         f:close()
 
@@ -350,7 +350,7 @@ function volume(args)
     myvolume:buttons(awful.util.table.join(
         awful.button({}, 1,
             function()
-                awful.util.spawn('control_volume.sh toggle ' .. mixer_channel)
+                awful.util.spawn('control_volume toggle ' .. mixer_channel)
              end),
 
         awful.button({}, 2,
@@ -360,17 +360,17 @@ function volume(args)
 
         awful.button({}, 3,
             function()
-                awful.util.spawn('control_volume.sh toggle ' .. mixer_channel)
+                awful.util.spawn('control_volume toggle ' .. mixer_channel)
             end),
 
         awful.button({}, 4,
             function()
-                awful.util.spawn('control_volume.sh up ' .. mixer_channel)
+                awful.util.spawn('control_volume up ' .. mixer_channel)
             end),
 
         awful.button({}, 5,
             function()
-                awful.util.spawn('control_volume.sh down ' .. mixer_channel)
+                awful.util.spawn('control_volume down ' .. mixer_channel)
             end)
     ))
     return myvolume
@@ -414,19 +414,19 @@ function mpd(args)
 
             awful.button({}, 3,
                 function()
-                    awful.util.spawn('control_volume.sh toggle '
+                    awful.util.spawn('control_volume toggle '
                                      .. mixer_channel)
                 end),
 
             awful.button({}, 4,
                 function()
-                    awful.util.spawn('control_volume.sh up '
+                    awful.util.spawn('control_volume up '
                                      .. mixer_channel)
                 end),
 
             awful.button({}, 5,
                 function()
-                    awful.util.spawn('control_volume.sh down '
+                    awful.util.spawn('control_volume down '
                                      .. mixer_channel)
                 end)
         ))

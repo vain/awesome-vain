@@ -461,9 +461,9 @@ contain:
 	.battery: Identifier of the battery to watch, defaults to `BAT0`.
 
 ## volume
-Show and control the current volume in a textbox. Periodically calls
-the `control_volume.sh` script to get the current volume. That same
-script is used to set the volume. See below.
+Show and control the current volume in a textbox. Periodically calls the
+`control_volume` script to get the current volume. That same script is
+used to set the volume. See below.
 
 * Left click: Mute/unmute.
 * Right click: Mute/unmute.
@@ -479,7 +479,7 @@ contain:
 	.mixer_channel: Defaults to `Master`.
 
 I currently use a script similar to the following as
-`control_volume.sh`:
+`control_volume`:
 
 	#!/bin/bash
 	channel=${2:-Master}
@@ -518,8 +518,7 @@ Provides a set of imageboxes to control a running instance of mpd on
 your local host. Also provides controls similiar to the volume widget.
 To control mpd, `mpc` is used.
 
-* Right click on any icon: Mute/unmute via `control_volume.sh`. See
-  above.
+* Right click on any icon: Mute/unmute via `control_volume`. See above.
 * Middle click on any icon: Call `ncmpcpp` in your `terminal`.
 
 This function does not return one widget but a table of widgets. For
