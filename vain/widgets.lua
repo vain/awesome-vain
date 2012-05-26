@@ -127,6 +127,7 @@ end
 function memusage(args)
     local args = args or {}
     local refresh_timeout = args.refresh_timeout or 10
+    local show_swap = args.show_swap or false
 
     local widg = widget({ type = "textbox" })
     local upd = function()
@@ -144,14 +145,24 @@ function memusage(args)
                 elseif k == "MemFree"   then mem.free  = math.floor(v / 1024)
                 elseif k == "Buffers"   then mem.buf   = math.floor(v / 1024)
                 elseif k == "Cached"    then mem.cache = math.floor(v / 1024)
+                elseif k == "SwapTotal" then mem.swap  = math.floor(v / 1024)
+                elseif k == "SwapFree"  then mem.swapf = math.floor(v / 1024)
                 end
             end
         end
 
         used = mem.total - (mem.free + mem.buf + mem.cache)
+        swapused = mem.swap - mem.swapf
         fmt = "%" .. string.len(mem.total) .. ".0f/%.0f MB"
         widg.text = ' <span color="' .. beautiful.fg_urgent .. '">'
                     .. string.format(fmt, used, mem.total) .. '</span> '
+
+        if show_swap
+        then
+            widg.text = widg.text .. '('
+                        .. string.format('%.0f MB', swapused)
+                        .. ') '
+        end
     end
     upd()
     local tmr = timer({ timeout = refresh_timeout })

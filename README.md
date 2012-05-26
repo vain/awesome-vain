@@ -398,6 +398,7 @@ The function takes a table as an optional argument. That table may
 contain:
 
 	.refresh_timeout: Defaults to 10 seconds.
+	.show_swap: Show amount of used swap space? Defaults to false.
 
 ## mailcheck
 Check Maildirs and show the result in a textbox. For example, I have a
