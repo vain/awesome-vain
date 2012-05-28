@@ -371,8 +371,9 @@ A click on the widget will call `htop` in your `terminal`.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 10 seconds.
-	.show_all: Show all three values or by default only the first one?
+* `.refresh_timeout`: Defaults to 10 seconds.
+* `.show_all`: Show all three values (`true`) or only the first one
+  (`false`)? Defaults to `false`.
 
 ## cpuusage
 Show the average CPU usage for a given amount of time. This is what
@@ -385,7 +386,7 @@ A click on the widget will call `htop` in your `terminal`.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 10 seconds.
+* `.refresh_timeout`: Defaults to 10 seconds.
 
 ## memusage
 Show used memory and total memory in MiB. Read from `/proc/meminfo`.
@@ -397,8 +398,8 @@ A click on the widget will call `htop` in your `terminal`.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 10 seconds.
-	.show_swap: Show amount of used swap space? Defaults to false.
+* `.refresh_timeout`: Defaults to 10 seconds.
+* `.show_swap`: Show amount of used swap space? Defaults to `false`.
 
 ## mailcheck
 Check Maildirs and show the result in a textbox. For example, I have a
@@ -434,12 +435,12 @@ will say something like "mail: bugs(3), system(1)", otherwise it says
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 30 seconds.
-	.mailpath: Path to your maildirs, defaults to `~/Mail`.
-	.ignore_boxes: Another table which lists boxes (just the last part,
-		like `lists`) to ignore. Defaults to an empty table.
-	.initial_update: Check for mail when starting Awesome or wait for
-		the first refresh timeout? Defaults to the former.
+* `.refresh_timeout`: Defaults to 30 seconds.
+* `.mailpath`: Path to your maildirs, defaults to `~/Mail`.
+* `.ignore_boxes`: Another table which lists boxes (just the last part,
+  like `lists`) to ignore. Defaults to an empty table.
+* `.initial_update`: Check for mail when starting Awesome (`true`) or
+  wait for the first refresh timeout (`false`)? Defaults to `true`.
 
 When clicking on the widget, the bash alias `smail` is called. That's a
 wrapper script for [mutt](http://www.mutt.org/) which I use: It
@@ -458,8 +459,8 @@ the current wattage. Uses the `/sys` filesystem.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 30 seconds.
-	.battery: Identifier of the battery to watch, defaults to `BAT0`.
+* `.refresh_timeout`: Defaults to 30 seconds.
+* `.battery`: Identifier of the battery to watch, defaults to `BAT0`.
 
 ## volume
 Show and control the current volume in a textbox. Periodically calls the
@@ -476,8 +477,8 @@ used to set the volume. See below.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 2 seconds.
-	.mixer_channel: Defaults to `Master`.
+* `.refresh_timeout`: Defaults to 2 seconds.
+* `.mixer_channel`: Defaults to `Master`.
 
 I currently use a script similar to the following as
 `control_volume`:
@@ -541,8 +542,9 @@ now, you'll have to add them one for one to your wibox:
 The function takes a table as an optional argument. That table may
 contain:
 
-	.mixer_channel: Defaults to `Master`.
-	.show_label: Defaults to `true`.
+* `.mixer_channel`: Defaults to `Master`.
+* `.show_label`: Determines whether `mpd:` is shown in front of the
+  control icons. Defaults to `true`.
 
 ## net
 Monitors network interfaces and shows current traffic in a textbox. If
@@ -555,8 +557,8 @@ kilobytes per second as `eth0: ↑(00,010.2), ↓(01,037.8)` or similar.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 2 seconds.
-	.iface: Defaults to `eth0`.
+* `.refresh_timeout`: Defaults to 2 seconds.
+* `.iface`: Defaults to `eth0`.
 
 ## gitodo
 This is an integration of [gitodo](https://github.com/vain/gitodo) into
@@ -567,9 +569,9 @@ Awesome.
 The function takes a table as an optional argument. That table may
 contain:
 
-	.refresh_timeout: Defaults to 120 seconds.
-	.initial_update: Check for todo items when starting Awesome or wait
-		for the first refresh timeout? Defaults to the former.
+* `.refresh_timeout`: Defaults to 120 seconds.
+* `.initial_update`: Check for todo items when starting Awesome (`true`)
+  or wait for the first refresh timeout (`false`)? Defaults to `true`.
 
 `beautiful.gitodo_normal` is used as the color for non-outdated items,
 `beautiful.gitodo_warning` for those items close to their deadline and
