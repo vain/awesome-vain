@@ -542,6 +542,7 @@ The function takes a table as an optional argument. That table may
 contain:
 
 	.mixer_channel: Defaults to `Master`.
+	.show_label: Defaults to `true`.
 
 ## net
 Monitors network interfaces and shows current traffic in a textbox. If

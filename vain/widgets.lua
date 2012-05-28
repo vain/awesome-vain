@@ -401,7 +401,12 @@ function mpd(args)
         widget({ type = "textbox" })
     }
 
-    mpdtable[1].text = " mpd: "
+    if args.show_label == nil or args.show_label
+    then
+        mpdtable[1].text = " mpd: "
+    else
+        mpdtable[1].text = " "
+    end
 
     mpdtable[2].image = image("/usr/share/icons/Tango/32x32/actions/" ..
                               "player_rew.png")
