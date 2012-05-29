@@ -266,6 +266,12 @@ local function tag_viewdirection_nonempty(direction, screenuserdata)
     local start = awful.tag.getidx(t)
     local tags = screen[screeni]:tags()
 
+    -- Maybe no tag is shown at all. Bail out.
+    if start == nil
+    then
+        return
+    end
+
     local i = start + direction
 
     -- Wrap indices. That's a little annoying since lua uses 1-based
