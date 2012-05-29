@@ -254,4 +254,47 @@ function niceborder_unfocus(c)
     end
 end
 
+-- An internal function: Show the next non-empty tag in the given
+-- direction (may be 1 = seek right or -1 = seek left). Don't use this
+-- function in your code, use tag_viewnext_nonempty() or
+-- tag_viewprev_nonempty().
+local function tag_viewdirection_nonempty(direction, screenuserdata)
+    -- Get screen index, the current tag, its index and all existing
+    -- tags on the current screen.
+    local screeni = screenuserdata and screenuserdata.index or mouse.screen
+    local t = awful.tag.selected(screeni)
+    local start = awful.tag.getidx(t)
+    local tags = screen[screeni]:tags()
+
+    local i = start + direction
+
+    -- Wrap indices. That's a little annoying since lua uses 1-based
+    -- indexing.
+    i = ((i - 1) % #tags) + 1
+
+    -- If all tags are empty, we will at some point return to i = start.
+    while i ~= start
+    do
+        -- Got a tag with clients! Now calculate offset and show it.
+        if #(tags[i]:clients()) ~= 0
+        then
+            awful.tag.viewidx(i - start, screenuserdata)
+            return
+        end
+
+        i = i + direction
+        i = ((i - 1) % #tags) + 1
+    end
+end
+
+-- Show the next non-empty tag.
+function tag_viewnext_nonempty(screenuserdata)
+    tag_viewdirection_nonempty( 1, screenuserdata)
+end
+
+-- Show the previous non-empty tag.
+function tag_viewprev_nonempty(screenuserdata)
+    tag_viewdirection_nonempty(-1, screenuserdata)
+end
+
 -- vim: set et :

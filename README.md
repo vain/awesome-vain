@@ -638,3 +638,33 @@ what I use:
 
 	theme.border_focus_lowprio   = "#3333FF"
 	theme.border_normal_lowprio  = "#333366"
+
+## tag\_view{next,prev}\_nonempty
+Maybe you're using a taglist that shows only non-empty tags:
+
+	mytaglist = awful.widget.taglist(s, awful.widget.taglist.label.noempty, mytaglist.buttons)
+	--                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Now, the default setup looks something like this:
+
+	globalkeys = awful.util.table.join(
+		-- Standard navigation
+		awful.key({ modkey }, "Left",   awful.tag.viewprev),
+		awful.key({ modkey }, "Right",  awful.tag.viewnext),
+		...
+
+So when pressing `modkey + right`, you jump to the next tag. However,
+when only showing non-empty tags, the target tag may be empty! I don't
+like that. I always want to jump to the next non-empty tag.
+
+`tag_viewnext_nonempty()` and `tag_viewprev_nonempty()` do exactly this.
+How to use them:
+
+	globalkeys = awful.util.table.join(
+		-- Standard navigation
+		awful.key({ modkey }, "Left",   vain.util.tag_viewprev_nonempty),
+		awful.key({ modkey }, "Right",  vain.util.tag_viewnext_nonempty),
+		...
+
+Note: To jump to an empty tag, you now must address it directly. That
+is, press `modkey + 4` or similar.
