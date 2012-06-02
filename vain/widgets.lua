@@ -11,10 +11,23 @@ local os = os
 local pairs = pairs
 local tonumber = tonumber
 local vain = vain
+local type = type
 
 module("vain.widgets")
 
 terminal = ''
+
+-- If vain.terminal is a string, e.g. "xterm", then "xterm -e " .. cmd is
+-- run. But if vain.terminal is a function, then terminal(cmd) is run.
+local function run_in_terminal(cmd)
+    if type(terminal) == "function"
+    then
+        terminal(cmd)
+    elseif type(terminal) == "string"
+    then
+        awful.util.spawn(terminal .. ' -e ' .. cmd)
+    end
+end
 
 -- System load
 function systemload(args)
@@ -46,7 +59,7 @@ function systemload(args)
     mysysload:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal .. ' -e htop')
+                run_in_terminal('htop')
             end)
     ))
     return mysysload
@@ -111,7 +124,7 @@ function cpuusage(args)
     w:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal .. ' -e htop')
+                run_in_terminal('htop')
             end)
     ))
     w.text = ' cpu: '
@@ -171,7 +184,7 @@ function memusage(args)
     widg:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal .. ' -e htop')
+                run_in_terminal('htop')
             end)
     ))
     return widg
@@ -253,7 +266,7 @@ function mailcheck(args)
     mymailcheck:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal .. ' -e bash -i -c smail')
+                run_in_terminal('bash -i -c smail')
             end)
     ))
     return mymailcheck
@@ -366,7 +379,7 @@ function volume(args)
 
         awful.button({}, 2,
             function()
-                awful.util.spawn(terminal .. ' -e alsamixer')
+                run_in_terminal('alsamixer')
             end),
 
         awful.button({}, 3,
@@ -425,7 +438,7 @@ function mpd(args)
 
             awful.button({}, 2,
                 function()
-                    awful.util.spawn(terminal .. ' -e ncmpcpp')
+                    run_in_terminal('ncmpcpp')
                 end),
 
             awful.button({}, 3,
@@ -573,10 +586,9 @@ function gitodo(args)
     widg:buttons(awful.util.table.join(
         awful.button({}, 0,
             function()
-                awful.util.spawn(terminal
-                                 .. ' -e bash -c "gitodo --raw | '
-                                 .. 'cut -d\\" \\" -f2 | highcal; '
-                                 .. 'echo; gitodo; echo; exec bash"')
+                run_in_terminal('bash -c "gitodo --raw | '
+                                .. 'cut -d\\" \\" -f2 | highcal; '
+                                .. 'echo; gitodo; echo; exec bash"')
             end)
     ))
 

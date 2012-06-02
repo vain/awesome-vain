@@ -21,8 +21,19 @@ Basically, all you have to do is including the module:
 	vain.widgets.terminal = "xterm"
 
 Some widgets require a terminal, so you need to set that as well.
+`terminal` may also be a lua function that accepts one parameter.
+Something like this:
 
-For this to work, the directory `vain` must be located in the same
+	function footerm(cmd)
+        awful.util.spawn("xterm -e " .. cmd)
+	end
+
+	vain.widgets.terminal = footerm
+
+While this particular is pretty useless, you may come up with something
+clever.
+
+Furthermore, the directory `vain` must be located in the same
 directory as your `rc.lua`.
 
 	$ pwd
