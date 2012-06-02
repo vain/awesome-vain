@@ -144,8 +144,7 @@ function memusage(args)
 
     local widg = widget({ type = "textbox" })
     local upd = function()
-        -- Get MEM info. Base code borrowed from Vicious, but I don't care
-        -- about swap space.
+        -- Get MEM info. Base code borrowed from Vicious.
         -- Note to self: Numbers in meminfo are KiB although it says kB.
         -- Actually, I'd like to use MB rather than MiB, but `htop` uses
         -- MiB, too, so I'll keep it consistent.
