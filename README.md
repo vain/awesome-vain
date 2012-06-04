@@ -588,6 +588,47 @@ contain:
 `beautiful.gitodo_warning` for those items close to their deadline and
 `beautiful.gitodo_outdated` is the color of outdated items.
 
+## borderbox
+Creates a thin wibox at a position relative to another wibox. This
+allows you to create "separators" or "borders" for your wiboxes. For
+example, think of this as a wibox:
+
+	[======================]
+
+If `args.position = 'above'`, then you'll get an additional wibox below
+the existing one:
+
+	________________________
+	[======================]
+
+It'll match position and size of the existing wibox.
+
+If your main wiboxes are stored in a table called `mywibox` (one wibox
+for each screen) and are located at the bottom of your screen, then this
+adds a borderbox on top of them:
+
+	for s = 1, screen.count()
+	do
+	    -- Most likely, you'll want to do this as well:
+	    awful.screen.padding(screen[s], { bottom = 1 })
+
+	    -- Create the box and place it above the existing box.
+	    vain.widgets.borderbox(mywibox[s], s, { position = 'above' } )
+	end
+
+`borderbox()` is defined as follows:
+
+	function borderbox(relbox, s, args)
+
+`relbox` and `s` (a number) are required arguments, `args` is optional.
+`args` may contain:
+
+* `.position`: One of `above`, `below`, `left` and `right`. Defaults to
+  `above`.
+* `.color`: The color of the additional box. Defaults to `#FFFFFF`.
+* `.size`: The size of the additional box, measured in pixels. Defaults
+  to `1`.
+
 
 Utility functions
 =================
