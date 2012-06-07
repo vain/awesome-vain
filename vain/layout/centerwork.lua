@@ -7,6 +7,12 @@ local math = math
 module("vain.layout.centerwork")
 
 name = "centerwork"
+
+top_left = 0
+top_right = 1
+bottom_left = 2
+bottom_right = 3
+
 function arrange(p)
 
     -- A useless gap (like the dwm patch) can be defined with
@@ -61,28 +67,28 @@ function arrange(p)
                 c = cls[i]
                 g = {}
 
-                if at == 0
+                if at == top_left
                 then
                     -- top left
                     g.x = wa.x + useless_gap
                     g.y = wa.y + useless_gap
                     g.width = slaveLwid - 2 * useless_gap
                     g.height = slaveThei - useless_gap
-                elseif at == 1
+                elseif at == top_right
                 then
                     -- top right
                     g.x = wa.x + slaveLwid + mainwid + useless_gap
                     g.y = wa.y + useless_gap
                     g.width = slaveRwid - 2 * useless_gap
                     g.height = slaveThei - useless_gap
-                elseif at == 2
+                elseif at == bottom_left
                 then
                     -- bottom left
                     g.x = wa.x + useless_gap
                     g.y = wa.y + slaveThei + useless_gap
                     g.width = slaveLwid - 2 * useless_gap
                     g.height = slaveBhei - 2 * useless_gap
-                elseif at == 3
+                elseif at == bottom_right
                 then
                     -- bottom right
                     g.x = wa.x + slaveLwid + mainwid + useless_gap
