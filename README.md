@@ -116,7 +116,7 @@ What about icons?
 -----------------
 
 Thanks to Nicolas Estibals (https://github.com/nestibal) for creating
-icons for awesome's default theme!
+icons for Awesome's default theme!
 
 You have to extend your theme like this (let's say this file is called
 `~/.config/awesome/extended_default_theme.lua`):
@@ -780,7 +780,7 @@ You can change it to this:
 	client.add_signal("focus", vain.util.niceborder_focus)
 	client.add_signal("unfocus", vain.util.niceborder_unfocus)
 
-Now, when a client is focused or unfocused, awesome will look up its
+Now, when a client is focused or unfocused, Awesome will look up its
 nice value in `/proc/<pid>/stat`. If it's less than 0, this window is
 classified as "high priority"; if it's greater than 0, the window is
 classified as "low priority". If it's equal to 0, nothing special
