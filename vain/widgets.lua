@@ -13,6 +13,7 @@ local tonumber = tonumber
 local vain = vain
 local type = type
 local capi = { wibox = wibox }
+local table = table
 
 module("vain.widgets")
 
@@ -228,6 +229,8 @@ function mailcheck(args)
                 end
             end
         until line == nil
+
+        table.sort(boxes)
 
         local newmail = ""
         for box, number in pairs(boxes)
