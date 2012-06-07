@@ -128,6 +128,7 @@ You have to extend your theme like this (let's say this file is called
 	theme.layout_gimp          = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/gimpw.png"
 	theme.layout_cascade       = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/cascadew.png"
 	theme.layout_cascadebrowse = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/cascadebrowsew.png"
+	theme.layout_centerwork    = os.getenv("HOME") .. "/.config/awesome/vain/themes/default/layouts/centerworkw.png"
 	...
 	return theme
 
@@ -333,6 +334,109 @@ This is a duplicate of the stock `fair` layouts. However, I added
 "useless gaps" (see below) to this layout. Use it like this:
 
 	awful.layout.set(vain.layout.uselessfair, tags[1][7])
+
+### centerwork
+You start with one window, centered horizontally:
+
+	+--------------------------+
+	|       +----------+       |
+	|       |          |       |
+	|       |          |       |
+	|       |          |       |
+	|       |   MAIN   |       |
+	|       |          |       |
+	|       |          |       |
+	|       |          |       |
+	|       |          |       |
+	|       +----------+       |
+	+--------------------------+
+
+This is your main working window. You do most of the work right here.
+Sometimes, you may want to open up additional windows. They're put in
+the following four slots:
+
+	+--------------------------+
+	| +---+ +----------+ +---+ |
+	| |   | |          | |   | |
+	| | 0 | |          | | 1 | |
+	| |   | |          | |   | |
+	| +---+ |   MAIN   | +---+ |
+	| +---+ |          | +---+ |
+	| |   | |          | |   | |
+	| | 2 | |          | | 3 | |
+	| |   | |          | |   | |
+	| +---+ +----------+ +---+ |
+	+--------------------------+
+
+Yes, the number "four" is fixed. In total, you can only have five open
+windows with this layout. Additional windows are not managed and set to
+floating mode. This is intentional.
+
+Set the layout on one of your tags:
+
+	awful.layout.set(vain.layout.centerwork, tags[s][t])
+
+You can set the order of the four auxiliary windows. This is the default
+configuration:
+
+	vain.layout.centerwork.top_left = 0
+	vain.layout.centerwork.top_right = 1
+	vain.layout.centerwork.bottom_left = 2
+	vain.layout.centerwork.bottom_right = 3
+
+This means: The bottom left slot will be occupied by the third window
+(not counting the main window). Suppose you want your windows to appear
+in this order:
+
+	+--------------------------+
+	| +---+ +----------+ +---+ |
+	| |   | |          | |   | |
+	| | 3 | |          | | 0 | |
+	| |   | |          | |   | |
+	| +---+ |   MAIN   | +---+ |
+	| +---+ |          | +---+ |
+	| |   | |          | |   | |
+	| | 2 | |          | | 1 | |
+	| |   | |          | |   | |
+	| +---+ +----------+ +---+ |
+	+--------------------------+
+
+This would require you to use these settings:
+
+	vain.layout.centerwork.top_left = 3
+	vain.layout.centerwork.top_right = 0
+	vain.layout.centerwork.bottom_left = 2
+	vain.layout.centerwork.bottom_right = 1
+
+*Please note:* If you use Awesome's default configuration, navigation in
+this layout may be very confusing. How do you get from the main window
+to the window on the bottom left? This depends on the order in which the
+windows are opened! Thus, I suggest you use
+`awful.client.focus.bydirection()`:
+
+	globalkeys = awful.util.table.join(
+	    awful.key({ modkey }, "j",
+	        function()
+	            awful.client.focus.bydirection("down")
+	            if client.focus then client.focus:raise() end
+	        end),
+	    awful.key({ modkey }, "k",
+	        function()
+	            awful.client.focus.bydirection("up")
+	            if client.focus then client.focus:raise() end
+	        end),
+	    awful.key({ modkey }, "h",
+	        function()
+	            awful.client.focus.bydirection("left")
+	            if client.focus then client.focus:raise() end
+	        end),
+	    awful.key({ modkey }, "l",
+	        function()
+	            awful.client.focus.bydirection("right")
+	            if client.focus then client.focus:raise() end
+	        end),
+	    -- ...
+	)
 
 Useless gaps
 ------------
