@@ -9,6 +9,7 @@ module("vain.layout.cascadebrowse")
 
 cascade_offset_x = 5
 cascade_offset_y = 32
+extra_padding = 0
 
 name = "cascadebrowse"
 function arrange(p)
@@ -70,6 +71,13 @@ function arrange(p)
         if overlap_main == 1
         then
             g.width = wa.width
+
+            -- The size of the main window may be reduced a little bit.
+            -- This allows you to see if there are any windows below the
+            -- main window.
+            -- This only makes sense, though, if the main window is
+            -- overlapping everything else.
+            g.width = g.width - extra_padding
         else
             g.width = mainwid
         end
