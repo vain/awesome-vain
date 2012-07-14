@@ -223,7 +223,12 @@ separate column for slave windows.
 
 	awful.layout.set(vain.layout.browse, tags[1][7])
 	awful.tag.setmwfact(0.5, tags[1][2])
-	awful.tag.setncol(2, tags[1][7])
+	awful.tag.setncol(1, tags[1][7])
+	vain.layout.browse.extra_padding = 5
+
+`extra_padding` reduces the size of the main window if "overlapping
+slave column" is activated. This allows you to see if there are any
+windows in your slave column.
 
 ### gimp
 *Please note: Since Gimp 2.8, this layout is deprecated and no longer
@@ -324,10 +329,15 @@ settings:
 
 	vain.layout.cascadebrowse.cascade_offset_x = 2
 	vain.layout.cascadebrowse.cascade_offset_y = 32
+	vain.layout.cascadebrowse.extra_padding = 5
 	awful.tag.setnmaster(5, tags[s][1])
+	awful.tag.setncol(1, tags[s][1])
 
 I recommend setting `cascade_offset_x` to a very small value or even 0
 to avoid wasting space.
+
+See the `browse` layout for an explanation of `extra_padding` and
+`ncol`.
 
 ### uselessfair
 This is a duplicate of the stock `fair` layouts. However, I added
